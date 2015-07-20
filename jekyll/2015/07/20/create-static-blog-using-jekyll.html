@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Thura BLog</title>
-  <meta name="description" content="">
+  <title>Create a staic blog using jekyll</title>
+  <meta name="description" content="Jekyll is a ruby gem so you will need ruby installed. After ruby installed, type the following command to install jekyll:">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://yourdomain.com/">
+  <link rel="canonical" href="http://yourdomain.com/jekyll/2015/07/20/create-static-blog-using-jekyll.html">
   <link rel="alternate" type="application/rss+xml" title="Thura BLog" href="http://yourdomain.com/feed.xml" />
 </head>
 
@@ -52,23 +52,33 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="home">
+        <div class="post">
 
-  <h1 class="page-heading">Posts</h1>
+  <header class="post-header">
+    <h1 class="post-title">Create a staic blog using jekyll</h1>
+    <p class="post-meta">Jul 20, 2015</p>
+  </header>
 
-  <ul class="post-list">
-    
-      <li>
-        <span class="post-meta">Jul 20, 2015</span>
+  <article class="post-content">
+    <p>Jekyll is a ruby gem so you will need ruby installed. After ruby installed, type the following command to install jekyll:</p>
 
-        <h2>
-          <a class="post-link" href="/jekyll/2015/07/20/create-static-blog-using-jekyll.html">Create a staic blog using jekyll</a>
-        </h2>
-      </li>
-    
-  </ul>
+<div class="highlight"><pre><code class="language-applescript" data-lang="applescript"><span class="nv">gem</span> <span class="nv">install</span> <span class="nv">jekyll</span></code></pre></div>
 
-  </p>
+<p>Then create a new blog using jekyll:</p>
+
+<div class="highlight"><pre><code class="language-applescript" data-lang="applescript"><span class="nv">jekyll</span> <span class="nb">new</span> <span class="nv">myblog</span>
+<span class="c">#=&gt; you can change myblog to anything you like</span></code></pre></div>
+
+<p>Then you would want to view <a href="http://code.tutsplus.com/tutorials/using-jekyll--cms-20956">Jekyll Basic</a> for the basic introduction of what the files means that you just created.</p>
+
+<p>Then please view this <a href="http://code.tutsplus.com/articles/building-static-sites-with-jekyll--net-22211">Jekyll Tutorial</a>. I found this helpful.</p>
+
+<p>After this two tutorials, you know how to create a static blog using jekyll. Now, it’s time to upload from your <code>_site</code> folder to your github. Follow this <a href="http://pages.github.com">github guide</a>, it’s very easy.</p>
+
+<p>Congratulations! You just finished creating your own static blog using jekyll.</p>
+
+
+  </article>
 
 </div>
 
