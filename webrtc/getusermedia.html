@@ -10,6 +10,7 @@
 	the received stream inside an HTML5 <video> element</p>
 	<p>View page source to access both HTML and JavaScript code...</p>
 	<video autoplay></video>
+	<video id="video" autoplay muted style="width:480px;height:360px;border:0px solid #000;"></video>
 
 
 	<script>
@@ -39,6 +40,19 @@
 		}
 		// Main action: just call getUserMedia() on the navigator object
 		navigator.getUserMedia(constraints, successCallback, errorCallback);
+		
+		
+		// multiple call
+		navigator.mediaDevices.enumerateDevices()
+		.then(devices => {
+		  var camera = devices.find(device => device.kind == "videoinput");
+		  if (camera) {
+		    var constraints = { deviceId: { exact: camera.deviceId } };
+		    return navigator.mediaDevices.getUserMedia({ video: constraints });
+		  }
+		})
+		.then(stream =>  $('#video').prop('src', URL.createObjectURL(stream)) )
+		.catch(e => console.error(e));
 	</script>
 	</div>
 </body>
