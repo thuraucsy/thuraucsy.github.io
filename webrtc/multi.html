@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<video id="video" autoplay muted style="width:480px;height:360px;border:0px solid #000;"></video>
+	<script>
+		navigator.mediaDevices.enumerateDevices()
+		.then(devices => {
+		  var camera = devices.find(device => device.kind == "videoinput");
+		  if (camera) {
+		    var constraints = { deviceId: { exact: camera.deviceId } };
+		    return navigator.mediaDevices.getUserMedia({ video: constraints });
+		  }
+		})
+		.then(stream =>  $('#video').prop('src', URL.createObjectURL(stream)) )
+		.catch(e => console.error(e));
+	</script>
+</body>
+</html>
