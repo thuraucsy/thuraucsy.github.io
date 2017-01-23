@@ -18,10 +18,6 @@
 	var peer = new Peer({key: myAPIKey});
 	var mediaStream;
 
-	peer.on('open', function(id) {
-		console.log('My peer ID is: ' + id);
-	});
-
 	/* get camera request from user */
 	// Prefer camera resolution nearest to 1280x720.
 	var constraints = { audio: false, video: { width: 1280, height: 720 } }; 
