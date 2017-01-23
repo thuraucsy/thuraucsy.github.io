@@ -38,13 +38,17 @@
 	// Call a peer, providing our mediaStream
 	var call = peer.call('myPeerId', mediaStream);
 
-	// Wait for stream on the call, then set peer video display
-	call.on('stream', function(stream){
-		var remote = document.getElementById('remote');
-		remote.srcObject = stream;
-	});
-	
+	callback(call);
+
+	function callback(call) {
+		// Wait for stream on the call, then set peer video display
+		call.on('stream', function(stream){
+			var remote = document.getElementById('remote');
+			remote.srcObject = stream;
+		});
+	}
+
 
 </script>
 </body>
-</html
+</html>
