@@ -36,12 +36,19 @@
 	// Call a peer, providing our mediaStream
 	var call = peer.call('myPeerId', mediaStream);
 
-	call.on('stream', function(stream) {
-		var remote = document.getElementById('remote');
-		remote.srcObject = stream;
-	  // `stream` is the MediaStream of the remote peer.
-	  // Here you'd add it to an HTML video/canvas element.
-	});
+	// peer.on('call', function(call) {
+	// 	// Answer the call, providing our mediaStream
+	// 	call.answer(mediaStream);
+
+	// 	call.on('stream', function(stream) {
+	// 		var remote = document.getElementById('remote');
+	// 		remote.srcObject = stream;
+	// 		// `stream` is the MediaStream of the remote peer.
+	// 		// Here you'd add it to an HTML video/canvas element.
+	// 	});
+	// });
+
+	
 
 
 
