@@ -35,8 +35,11 @@
 	  };
 	})
 	.catch(function(err) { console.log(err.name + ": " + err.message); }); // always check for errors at the end.
-
-
+	
+	
+	peer.on('connection', function(dataConnection) {
+		console.log('metadata', dataConnection.metadata);
+	});
 
 	peer.on('call', function(call) {
 		
