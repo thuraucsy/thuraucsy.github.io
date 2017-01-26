@@ -69,7 +69,7 @@
 				dataConnection.on('data', function(data) {
 				    console.log('Received', data);
 				    var textVal = "<span style='color: red'>"+ data +"</span>";
-					imgDisplay.append(data + "<br>");
+					imgDisplay.append(textVal + "<br>");
 				});
 			  
 			});
