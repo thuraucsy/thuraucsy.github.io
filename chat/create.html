@@ -48,9 +48,11 @@
 		call.answer(mediaStream);
 		
 		
-		console.log('metadata', call.metadata);
+	
 
 		call.on('stream', function(stream) {
+			console.log('metadata', stream.metadata);
+			
 			var remote = document.getElementById('remote');
 			remote.srcObject = stream;
 			// `stream` is the MediaStream of the remote peer.
