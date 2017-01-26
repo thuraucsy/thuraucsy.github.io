@@ -38,7 +38,7 @@
 		$('#make-call').click(function(){
 			// Initiate a call!
 			// Call a peer, providing our mediaStream
-			var call = peer.call('myPeerId', mediaStream, {"thura": "aung"});
+			var call = peer.call('myPeerId', mediaStream, { metadata: { userName: 'Thura Aung' });
 			
 			// Wait for stream on the call, then set peer video display
 			call.on('stream', function(stream){
