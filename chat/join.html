@@ -58,8 +58,10 @@
 						// Send messages
 						var textVal = "<span style='color: green'>"+ $(this).val() +"</span>";
 
-			  			dataConnection.send(textVal);
+			  			dataConnection.send($(this).val());
 						imgDisplay.append(textVal + "<br>");
+
+						$(this).val("");
 					}
 				});
 
