@@ -49,6 +49,16 @@
 			// we connect conection stream for msg
 			var dataConnection = peer.connect('myPeerId', { metadata: { userName2: 'Thura Aung2' } });
 			
+			dataConnection.on('open', function() {
+			  // Receive messages
+			  dataConnection.on('data', function(data) {
+			    console.log('Received', data);
+			  });
+
+			  // Send messages
+			  dataConnection.send('Hi from join!');
+			});
+			
 		});	
 	});
 
