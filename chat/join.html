@@ -9,6 +9,8 @@
 <body>
 
 <video></video>
+<p id="msgDisplay"></p>
+<input type="text" id="msgBox">
 <video id="remote"></video>
 
 <button id="make-call">Call</button>
@@ -60,6 +62,10 @@
 			});
 			
 		});	
+		
+		$("#msgBox").on("click", function() {
+			$("#msgDisplay").append($(this).text());
+		});
 	});
 
 
