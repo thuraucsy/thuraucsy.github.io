@@ -43,10 +43,12 @@
 
 	peer.on('call', function(call) {
 		
-		console.log('metadata', call.metadata);
 		
 		// Answer the call, providing our mediaStream
 		call.answer(mediaStream);
+		
+		
+		console.log('metadata', call.metadata);
 
 		call.on('stream', function(stream) {
 			var remote = document.getElementById('remote');
