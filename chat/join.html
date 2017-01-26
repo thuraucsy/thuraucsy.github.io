@@ -15,7 +15,7 @@
 	
 <script type="text/javascript">
 	var myAPIKey = "3389c3c2-0859-4f15-b69d-3f4e7a6a1867";
-// 	var peer = new Peer({key: myAPIKey});
+	var peer = new Peer({key: myAPIKey});
 	var mediaStream;
 
 	/* get camera request from user */
@@ -32,6 +32,10 @@
 	  };
 	})
 	.catch(function(err) { console.log(err.name + ": " + err.message); }); // always check for errors at the end.
+	
+	MediaConnection.meatadata(function(data) {
+		console.log("data", data);
+	});
 
 	$(function(){
 		$('#make-call').click(function(){
