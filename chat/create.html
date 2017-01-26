@@ -60,6 +60,11 @@
 			// Here you'd add it to an HTML video/canvas element.
 		});
 	});
+	
+	// receive the message sent from join.html
+	peer.on('connection', function(dataConnection) {
+		console.log("dataConnection.metadata", dataConnection.metadata);
+	});
 
 
 	
