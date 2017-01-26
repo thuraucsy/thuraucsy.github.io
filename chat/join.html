@@ -4,7 +4,7 @@
 <head>
 	<title>To chat with my belove</title>
 	<script src="https://skyway.io/dist/0.3/peer.min.js"></script>
-  	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 </head>
 <body>
 
@@ -19,11 +19,9 @@
 	var myAPIKey = "3389c3c2-0859-4f15-b69d-3f4e7a6a1867";
 	var peer = new Peer({key: myAPIKey});
 	var mediaStream;
-
 	/* get camera request from user */
 	// Prefer camera resolution nearest to 1280x720.
 	var constraints = { audio: false, video: { width: 1280, height: 720 } }; 
-
 	navigator.mediaDevices.getUserMedia(constraints)
 	.then(function(strem) {
 	  var video = document.querySelector('video');
@@ -52,23 +50,30 @@
 			var dataConnection = peer.connect('myPeerId', { metadata: { userName2: 'Thura Aung2' } });
 			
 			dataConnection.on('open', function() {
-			  // Receive messages
-			  dataConnection.on('data', function(data) {
-			    console.log('Received', data);
-			  });
 
-			  // Send messages
-			  dataConnection.send('Hi from join!');
+				var imgDisplay = $("#msgDisplay");
+
+				$("#msgBox").on("keypress", function(e) {
+					if (e.which == 13) {
+						// Send messages
+						var textVal = "<span style='color: green'>"+ $(this).val() +"</span>";
+
+			  			dataConnection.send(textVal);
+						imgDisplay.append(textVal + "<br>");
+					}
+				});
+
+				// Receive messages
+				dataConnection.on('data', function(data) {
+				    console.log('Received', data);
+				    var textVal = "<span style='color: red'>"+ data +"</span>";
+					imgDisplay.append(data + "<br>");
+				});
+			  
 			});
 			
 		});	
-		
-		$("#msgBox").on("click", function() {
-			$("#msgDisplay").append($(this).text());
-		});
 	});
-
-
 </script>
 </body>
 </html>
