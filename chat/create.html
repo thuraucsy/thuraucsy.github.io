@@ -8,6 +8,8 @@
 <body>
 
 <video></video>
+<p id="msgDisplay"></p>
+<input type="text" id="msgBox">
 <video id="remote"></video>
 	
 <script type="text/javascript">
@@ -65,14 +67,25 @@
 	peer.on('connection', function(dataConnection) {
 		console.log("dataConnection.metadata", dataConnection.metadata);
 		
-		dataConnection.on('open', function() {
-		  // Receive messages
-		  dataConnection.on('data', function(data) {
-		    console.log('Received', data);
-		  });
+		var imgDisplay = $("#msgDisplay");
 
-		  // Send messages
-		  dataConnection.send('Hello from create!');
+		$("#msgBox").on("keypress", function(e) {
+			if (e.which == 13) {
+				// Send messages
+				var textVal = "<span style='color: green'>"+ $(this).val() +"</span>";
+
+				dataConnection.send($(this).val());
+				imgDisplay.append(textVal + "<br>");
+
+				$(this).val("");
+			}
+		});
+
+		// Receive messages
+		dataConnection.on('data', function(data) {
+		    console.log('Received', data);
+		    var textVal = "<span style='color: red'>"+ data +"</span>";
+			imgDisplay.append(data + "<br>");
 		});
 		
 		
