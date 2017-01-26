@@ -40,11 +40,6 @@
 
 	peer.on('call', function(call) {
 		
-		mediaConnection.meatadata(function(data) {
-			console.log("data", data);
-		});
-
-		
 		// Answer the call, providing our mediaStream
 		call.answer(mediaStream);
 
