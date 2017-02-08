@@ -13,6 +13,7 @@
 
 <p id="msgDisplay"></p>
 <input type="text" id="msgBox">
+<button id="disconnect-call">Disconnect</button>
 	
 <script type="text/javascript">
 	var myAPIKey = "3389c3c2-0859-4f15-b69d-3f4e7a6a1867";
@@ -63,11 +64,7 @@
 			// `stream` is the MediaStream of the remote peer.
 			// Here you'd add it to an HTML video/canvas element.
 		});
-		
-		// when disconnect from peer
-		peer.on('close', function(){
-			console.log('peer is closed');
-		});
+
 	});
 	
 	// receive the message sent from join.html
@@ -98,6 +95,11 @@
 		
 	});
 	
+	
+	$('#disconnect-call').click(function(){
+		peer.destroy();
+		console.log("peer.destroyed", peer.destroyed);
+	});
 	
 
 
