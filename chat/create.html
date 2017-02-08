@@ -63,6 +63,11 @@
 			// `stream` is the MediaStream of the remote peer.
 			// Here you'd add it to an HTML video/canvas element.
 		});
+		
+		// when disconnect from peer
+		peer.on('close', function(){
+			console.log('peer is closed');
+		});
 	});
 	
 	// receive the message sent from join.html
@@ -93,10 +98,7 @@
 		
 	});
 	
-	// when disconnect from peer
-	peer.on('close', function(){
-		console.log('peer is closed');
-	});
+	
 
 
 	
