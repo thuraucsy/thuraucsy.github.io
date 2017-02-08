@@ -98,7 +98,6 @@
 	
 	$('#disconnect-call').click(function(){
 		peer.destroy();
-		peer.close();
 		peer.disconnect();
 		console.log("peer.destroyed", peer.destroyed);
 	});
