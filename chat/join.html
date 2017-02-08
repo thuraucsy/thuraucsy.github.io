@@ -38,6 +38,7 @@
 	$(function(){
 		$('#disconnect-call').click(function(){
 			peer.destroy();
+			console.log("peer.destroyed", peer.destroyed);
 		});
 		
 		$('#make-call').click(function(){
