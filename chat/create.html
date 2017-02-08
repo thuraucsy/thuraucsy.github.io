@@ -92,6 +92,11 @@
 		
 		
 	});
+	
+	// when disconnect from peer
+	peer.on('disconnected', function(){
+		console.log('peer is disconnected');
+	});
 
 
 	
