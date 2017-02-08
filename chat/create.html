@@ -94,8 +94,8 @@
 	});
 	
 	// when disconnect from peer
-	peer.on('disconnected', function(){
-		console.log('peer is disconnected');
+	peer.on('close', function(){
+		console.log('peer is closed');
 	});
 
 
