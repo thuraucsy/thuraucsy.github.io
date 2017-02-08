@@ -14,7 +14,7 @@
 <p id="msgDisplay"></p>
 <input type="text" id="msgBox">
 <button id="make-call">Call</button>
-<button id="disconnect-call">Disconnect</button>
+
 	
 <script type="text/javascript">
 	var myAPIKey = "3389c3c2-0859-4f15-b69d-3f4e7a6a1867";
@@ -36,9 +36,11 @@
 	
 	
 	$(function(){
-		$('#disconnect-call').click(function(){
-			peer.destroy();
-			console.log("peer.destroyed", peer.destroyed);
+		
+				
+		// when disconnect from peer
+		peer.on('close', function(){
+			console.log('peer is closed');
 		});
 		
 		$('#make-call').click(function(){
