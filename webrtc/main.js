@@ -16,15 +16,16 @@ window.onload = function() {
 };
 
 function getSources_() {
-  if (typeof MediaStreamTrack.getSources === 'undefined') {
-    alert('Your browser does not support getSources, aborting.');
+  if (typeof navigator.mediaDevices.enumerateDevices === 'undefined') {
+    alert('Your browser does not support navigator.mediaDevices.enumerateDevices, aborting.');
     return;
   }
-  MediaStreamTrack.getSources(function(devices) {
+  navigator.mediaDevices.enumerateDevices().then(function(devices) {
     for (var i = 0; i < devices.length; i++) {
-      if (devices[i].kind === 'video') {
+    console.log("devices[i].label", devices[i].label)
+      if (devices[i].kind === 'videoinput') {
         deviceList[i] = devices[i];
-        requestVideo_(deviceList[i].id);
+        requestVideo_(deviceList[i].deviceId);
       }
     }
   });
@@ -33,13 +34,14 @@ function getSources_() {
 function requestVideo_(id) {
   navigator.mediaDevices.getUserMedia({
     video: {optional: [{sourceId: id}]},
-    audio: false}).then(
+    audio: true}).then(
     function(stream) {
-      getUserMediaOkCallback_(stream);
-    },
+		  getUserMediaOkCallback_(stream);
+     },
     getUserMediaFailedCallback_
   );
 }
+
 
 function getUserMediaFailedCallback_(error) {
   alert('User media request denied with error: ' + error.name);
