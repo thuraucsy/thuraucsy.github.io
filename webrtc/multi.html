@@ -396,7 +396,11 @@
   }
   // ---------------------- connection handling -----------------------
   function prepareNewConnection(id) {
-    let pc_config = {"iceServers":[]};
+    let pc_config = {"iceServers":[
+    {"urls": "stun:turnsv1.itj.jp:80"},
+    {"urls":"turn:turnsv1.itj.jp:80?transport=udp", "username":"user", "credential":"password"},
+    {"urls":"turn:turnsv1.itj.jp:80?transport=tcp", "username":"user", "credential":"password"}
+  ]};
     let peer = new RTCPeerConnection(pc_config);
     // --- on get remote stream ---
     if ('ontrack' in peer) {
