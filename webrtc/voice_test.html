@@ -9,12 +9,12 @@
 </head>
 <body>
 
-<video></video>
+<video autoplay></video>
 
 <script type="text/javascript">
 
 
-	navigator.getUserMedia({ video: true, audio: true }, 
+	navigator.getUserMedia({ video: false, audio: true }, 
 	function(stream){
 		$('video').prop('src', URL.createObjectURL(stream));
 		console.log(stream)
