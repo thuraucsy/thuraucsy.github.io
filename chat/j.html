@@ -1,0 +1,67 @@
+<!-- http://nttcom.github.io/skyway/en/docs/#JS -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>To chat with my belove</title>
+	<script src="https://skyway.io/dist/0.3/peer.min.js"></script>
+  	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+</head>
+<body>
+
+<p id="msgDisplay"></p>
+<input type="text" id="msgBox">
+<button id="make-call">Call</button>
+
+	
+<script type="text/javascript">
+	var myAPIKey = "3389c3c2-0859-4f15-b69d-3f4e7a6a1867";
+	var peer = new Peer({key: myAPIKey});
+	var mediaStream;
+	
+	
+	$(function(){
+		
+				
+		// when disconnect from peer
+		peer.on('close', function(){
+			console.log('peer is closed');
+		});
+		peer.on('disconnect', function(){
+			console.log('peer is disconnected');
+		});
+		
+		$('#make-call').click(function(){
+			
+			// we connect conection stream for msg
+			var dataConnection = peer.connect('myPeerId', { metadata: { userName2: 'Thura Aung2' } });
+			
+			dataConnection.on('open', function() {
+
+				var imgDisplay = $("#msgDisplay");
+
+				$("#msgBox").on("keypress", function(e) {
+					if (e.which == 13) {
+						// Send messages
+						var textVal = "<span style='color: green'>"+ $(this).val() +"</span>";
+
+			  			dataConnection.send($(this).val());
+						imgDisplay.append(textVal + "<br>");
+
+						$(this).val("");
+					}
+				});
+
+				// Receive messages
+				dataConnection.on('data', function(data) {
+				    console.log('Received', data);
+				    var textVal = "<span style='color: red'>"+ data +"</span>";
+					imgDisplay.append(textVal + "<br>");
+				});
+			  
+			});
+			
+		});	
+	});
+</script>
+</body>
+</html>
