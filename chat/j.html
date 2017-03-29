@@ -61,11 +61,12 @@
 //					var data = JSON.parse(event.data);
 
 					arrayToStoreChunks.push(data.message); // pushing chunks in array
-					data = 'file is receiving ...' + data.message;
+					
 					if (data.last) {
 						saveToDisk(arrayToStoreChunks.join(''), 'fake fileName');
 						arrayToStoreChunks = []; // resetting array
 					}
+					data = 'file is receiving ...' + data.message;
 					
 				  } 
 					
