@@ -17,7 +17,7 @@
 	var myAPIKey = "3389c3c2-0859-4f15-b69d-3f4e7a6a1867";
 	var peer = new Peer({key: myAPIKey});
 	var mediaStream;
-	
+	var arrayToStoreChunks = [];
 	
 	$(function(){
 		
@@ -57,8 +57,22 @@
 				    var textVal = "<span style='color: red'>"+ data +"</span>";
 					imgDisplay.append(textVal + "<br>");
 				});
+				
+				dataConnection.onmessage = function (event) {
+				 console.log("receiving");
+				    var data = JSON.parse(event.data);
+
+				    arrayToStoreChunks.push(data.message); // pushing chunks in array
+
+				    if (data.last) {
+					saveToDisk(arrayToStoreChunks.join(''), 'fake fileName');
+					arrayToStoreChunks = []; // resetting array
+				    }
+				};
 			  
 			});
+			
+			
 			
 		});	
 	});
