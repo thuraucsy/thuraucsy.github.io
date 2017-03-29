@@ -1,0 +1,57 @@
+<!-- http://nttcom.github.io/skyway/en/docs/#JS -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>To chat with my belove</title>
+	<script src="https://skyway.io/dist/0.3/peer.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+</head>
+<body>
+
+<p id="msgDisplay"></p>
+<input type="text" id="msgBox">
+<button id="disconnect-call">Disconnect</button>
+	
+<script type="text/javascript">
+	var myAPIKey = "3389c3c2-0859-4f15-b69d-3f4e7a6a1867";
+	var peer = new Peer("myPeerId", {key: myAPIKey});
+	var mediaStream;
+	peer.on('open', function(id) {
+	  console.log('My peer ID is: ' + id);
+	});
+	
+	// receive the message sent from join.html
+	peer.on('connection', function(dataConnection) {
+		console.log("dataConnection.metadata", dataConnection.metadata);
+		
+		var imgDisplay = $("#msgDisplay");
+		$("#msgBox").on("keypress", function(e) {
+			if (e.which == 13) {
+				// Send messages
+				var textVal = "<span style='color: green'>"+ $(this).val() +"</span>";
+				dataConnection.send($(this).val());
+				imgDisplay.append(textVal + "<br>");
+				$(this).val("");
+			}
+		});
+		// Receive messages
+		dataConnection.on('data', function(data) {
+		    console.log('Received', data);
+		    var textVal = "<span style='color: red'>"+ data +"</span>";
+			imgDisplay.append(textVal + "<br>");
+		});
+		
+		
+	});
+	
+	
+	$('#disconnect-call').click(function(){
+		peer.destroy();
+		peer.disconnect();
+		console.log("peer.destroyed", peer.destroyed);
+	});
+	
+	
+</script>
+</body>
+</html>
