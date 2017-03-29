@@ -71,16 +71,19 @@
 				});
 				
 				function saveToDisk(fileUrl, fileName) {
-				    var save = document.createElement('a');
+				  console.log("save to disk is running");
+				     var save = document.createElement('a');
 				    save.href = fileUrl;
 				    save.target = '_blank';
 				    save.download = fileName || fileUrl;
 
-				    var event = document.createEvent('Event');
-				    event.initEvent('click', true, true);
+				    var evt = document.createEvent('MouseEvents');
+				    evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
 
-				    save.dispatchEvent(event);
+				    save.dispatchEvent(evt);
+
 				    (window.URL || window.webkitURL).revokeObjectURL(save.href);
+				  console.log("save to disk finished");
 				}
 			  
 			});
