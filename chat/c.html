@@ -51,7 +51,7 @@
 			reader.readAsDataURL(file);
 			reader.onload = onReadAsDataURL;
 			
-			var chunkLength = 1000;
+			var chunkLength = 10000;
 			
 			function onReadAsDataURL(event, text) {
 			    var data = {}; // data object to transmit over data channel
@@ -70,7 +70,7 @@
 			    var remainingDataURL = text.slice(data.message.length);
 			    if (remainingDataURL.length) setTimeout(function () {
 				onReadAsDataURL(null, remainingDataURL); // continue transmitting
-			    }, 1)
+			    }, 500)
 			}
 		};
 		
