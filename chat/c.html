@@ -26,6 +26,7 @@
 	peer.on('connection', function(dataConnection) {
 		console.log("dataConnection.metadata", dataConnection.metadata);
 		var imgDisplay = $("#msgDisplay");
+		dataConnection.send("Connected to c!");
 		
 		var textVal = "<span style='color: black'>"+ "Connected!" +"</span>";
 			imgDisplay.append(textVal + "<br>");
