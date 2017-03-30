@@ -4,24 +4,24 @@
 <head>
 	<title>To chat with my belove</title>
 	<script src="https://skyway.io/dist/0.3/peer.min.js"></script>
-  	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 </head>
 <body>
 
-<p id="msgDisplay"></p>
-<input type="text" id="msgBox">
+	<p id="msgDisplay"></p>
+	<input type="text" id="msgBox">
 
 
 	
-<script type="text/javascript">
-	var myAPIKey = "3389c3c2-0859-4f15-b69d-3f4e7a6a1867";
-	var peer = new Peer({key: myAPIKey});
-	var mediaStream;
-	var arrayToStoreChunks = [];
-	
-	$(function(){
-		
-				
+	<script type="text/javascript">
+		var myAPIKey = "3389c3c2-0859-4f15-b69d-3f4e7a6a1867";
+		var peer = new Peer({key: myAPIKey});
+		var mediaStream;
+		var arrayToStoreChunks = [];
+
+		$(function(){
+
+
 		// when disconnect from peer
 		peer.on('close', function(){
 			console.log('peer is closed');
@@ -30,10 +30,12 @@
 			console.log('peer is disconnected');
 		});
 		
-		// we connect conection stream for msg
-		var dataConnection = peer.connect('myPeerId', { metadata: { userName2: 'Thura Aung2' } });
+		
 
-		dataConnection.on('open', function() {
+		peer.on('open', function() {
+
+			// we connect conection stream for msg
+			var dataConnection = peer.connect('myPeerId', { metadata: { userName2: 'Thura Aung2' } });
 
 			var imgDisplay = $("#msgDisplay");
 
@@ -51,11 +53,11 @@
 
 			// Receive messages
 			dataConnection.on('data', function(data) {
-			    console.log('Received', data);
+				console.log('Received', data);
 
 
-			  if (data.message) {
-				console.log("receiving file");
+				if (data.message) {
+					console.log("receiving file");
 //					var data = JSON.parse(event.data);
 
 				arrayToStoreChunks.push(data.message); // pushing chunks in array
@@ -66,26 +68,26 @@
 				}
 				data = 'file is receiving ...' + data.message;
 
-			  } 
+			} 
 
 			var textVal = "<span style='color: blue'>"+ data +"</span>";
 			imgDisplay.append(textVal + "<br>");
-			});
+		});
 
 			function saveToDisk(fileUrl, fileName) {
-			  console.log("save to disk is running");
-			     var save = document.createElement('a');
-			    save.href = fileUrl;
-			    save.target = '_blank';
-			    save.download = fileName || fileUrl;
+				console.log("save to disk is running");
+				var save = document.createElement('a');
+				save.href = fileUrl;
+				save.target = '_blank';
+				save.download = fileName || fileUrl;
 
-			    var evt = document.createEvent('MouseEvents');
-			    evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+				var evt = document.createEvent('MouseEvents');
+				evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
 
-			    save.dispatchEvent(evt);
+				save.dispatchEvent(evt);
 
-			    (window.URL || window.webkitURL).revokeObjectURL(save.href);
-			  console.log("save to disk finished");
+				(window.URL || window.webkitURL).revokeObjectURL(save.href);
+				console.log("save to disk finished");
 			}
 
 		});	
