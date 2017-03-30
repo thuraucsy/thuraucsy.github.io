@@ -25,8 +25,12 @@
 	// receive the message sent from join.html
 	peer.on('connection', function(dataConnection) {
 		console.log("dataConnection.metadata", dataConnection.metadata);
-		
 		var imgDisplay = $("#msgDisplay");
+		
+		var textVal = "<span style='color: black'>"+ "Connected!" +"</span>";
+			imgDisplay.append(textVal + "<br>");
+		
+		
 		$("#msgBox").on("keypress", function(e) {
 			if (e.which == 13) {
 				// Send messages
