@@ -31,7 +31,9 @@
 		var textVal = "<span style='color: black'>"+ "Connected!" +"</span>";
 		imgDisplay.append(textVal + "<br>");
 		
-		dataConnection.send("Connected!");
+		setTimeout(function(){
+			dataConnection.send("Connected!");
+		}, 1000);
 		
 		
 		$("#msgBox").on("keypress", function(e) {
