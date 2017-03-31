@@ -9,11 +9,9 @@
 <body>
 
 <input type="file">
-	
 <p id="msgDisplay"></p>
 <input type="text" id="msgBox">
 
-	
 <script type="text/javascript">
 	var myPeerAPIKey = "3389c3c2-0859-4f15-b69d-3f4e7a6a1867";
 	var peer;
@@ -91,23 +89,24 @@
 			reader.onload = onReadAsDataURL;
 			
 			var chunkLength = 1000000;
-			
-		};
-		onReadAsDataURL = function(event, text) {
-		    var data = {}; // data object to transmit over data channel
-		    if (event) text = event.target.result; // on first invocation
-		    if (text.length > chunkLength) {
-				data.message = text.slice(0, chunkLength); // getting chunk using predefined chunk length
-			} else {
-				data.message = text;
-				data.last = true;
+
+			function onReadAsDataURL(event, text) {
+			    var data = {}; // data object to transmit over data channel
+			    if (event) text = event.target.result; // on first invocation
+			    if (text.length > chunkLength) {
+					data.message = text.slice(0, chunkLength); // getting chunk using predefined chunk length
+				} else {
+					data.message = text;
+					data.last = true;
+				}
+				    dataConnection.send(data); // use JSON.stringify for chrome!
+				    var remainingDataURL = text.slice(data.message.length);
+				    if (remainingDataURL.length) setTimeout(function () {
+					onReadAsDataURL(null, remainingDataURL); // continue transmitting
+				}, 1000)
 			}
-			    dataConnection.send(data); // use JSON.stringify for chrome!
-			    var remainingDataURL = text.slice(data.message.length);
-			    if (remainingDataURL.length) setTimeout(function () {
-				onReadAsDataURL(null, remainingDataURL); // continue transmitting
-			}, 1000)
-		}
+		};
+		
 
 		return dataConnection;
 	}
@@ -157,9 +156,6 @@
 		(window.URL || window.webkitURL).revokeObjectURL(save.href);
 		console.log("save to disk finished");
 	}
-
-	
-	
 </script>
 </body>
 </html>
