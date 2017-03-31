@@ -118,11 +118,18 @@
 		if (args.length > 1) {
 			let room = args[1];
 			if (room != '') {
-				// create peer as room joiner
-				peer = new Peer({key: myPeerAPIKey});
-				// call to room owner
-				dataConnection = peer.connect(room, { metadata: { userName2: 'Thura Aung2' } });
-				dataConnection = dataConnectionEvent(dataConnection);
+				if (window.history.state === 'owner) {
+					console.log('owner refreshing');
+					peer = new Peer(room, {key: myPeerAPIKey});
+				} else {
+					console.log('joiner refreshing');
+					// create peer as room joiner
+					peer = new Peer({key: myPeerAPIKey});
+					// call to room owner
+					dataConnection = peer.connect(room, { metadata: { userName2: 'Thura Aung2' } });
+					dataConnection = dataConnectionEvent(dataConnection);
+				}
+				
 				return room;
 			}
 		}
@@ -131,7 +138,7 @@
 		let room = 'room_' + getUniqueStr();
 		// create peer as room owner
 		peer = new Peer(room, {key: myPeerAPIKey});
-		window.history.pushState(null, null, 'chat.html?' + room);
+		window.history.pushState("owner", null, 'chat.html?' + room);
 		return room;
 	}
 
