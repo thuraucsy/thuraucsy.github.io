@@ -51,22 +51,7 @@ function requestVideo_(id) {
   navigator.mediaDevices.getUserMedia({
 	//video: {optional: [{sourceId: id}]},
 	video: {optional: [{sourceId: id}]},
-	audio: {
-	    optional: [
-			
-		    { 
-//  			googEchoCancellation: false,
-//  			googAutoGainControl: false,
-//  			googAutoGainControl2: false,
-			googNoiseSuppression: false,
-//  			googHighpassFilter: false,
-//  			googTypingNoiseDetection: false,
-// 			googAudioMirroring: false // For some reason setting googAudioMirroring causes a navigator.getUserMedia error:  NavigatorUserMediaError
-		    }
-		
-
-		    ]
-	}
+	audio: {optional: [{echoCancellation: false}]}
   }
 				    			     
 				     
