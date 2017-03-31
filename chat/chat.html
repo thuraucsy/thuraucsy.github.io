@@ -42,6 +42,20 @@
 		// Receive messages
 		dataConnection.on('data', function(data) {
 		    console.log('Received', data);
+
+		    if (data.message) {
+				console.log("receiving file");
+
+				arrayToStoreChunks.push(data.message); // pushing chunks in array
+
+				if (data.last) {
+					saveToDisk(arrayToStoreChunks.join(''), 'fake fileName');
+					arrayToStoreChunks = []; // resetting array
+				}
+				data = 'file is receiving ...' + data.message;
+
+			} 
+
 		    var textVal = "<span style='color: red'>"+ data +"</span>";
 			imgDisplay.append(textVal + "<br>");
 		});
@@ -56,32 +70,6 @@
 				$(this).val("");
 			}
 		});
-		
-		
-		document.querySelector('input[type=file]').onchange = function() {
-			var file = this.files[0];
-			var reader = new window.FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = onReadAsDataURL;
-			
-			var chunkLength = 100000;
-			
-			function onReadAsDataURL(event, text) {
-			    var data = {}; // data object to transmit over data channel
-			    if (event) text = event.target.result; // on first invocation
-			    if (text.length > chunkLength) {
-				data.message = text.slice(0, chunkLength); // getting chunk using predefined chunk length
-			    } else {
-				data.message = text;
-				data.last = true;
-			    }
-			    dataConnection.send(data); // use JSON.stringify for chrome!
-			    var remainingDataURL = text.slice(data.message.length);
-			    if (remainingDataURL.length) setTimeout(function () {
-				onReadAsDataURL(null, remainingDataURL); // continue transmitting
-			    }, 10)
-			}
-		};
 		
 		
 	});
@@ -121,9 +109,7 @@
 	}
 
 
-	
-
-	// -- room名を取得 --
+	/*COMMON FUNCTION*/
 	function getRoomName() { // たとえば、 URLに  ?roomname  とする
 		let url = document.location.href;
 		let args = url.split('?');
@@ -146,8 +132,6 @@
 		return room;
 	}
 
-	// http://qiita.com/coa00@github/items/679b0b5c7c468698d53f
-	// 疑似ユニークIDを生成
 	function getUniqueStr(myStrong){
 		var strong = 1000;
 		if (myStrong) strong = myStrong;
@@ -169,6 +153,31 @@
 		(window.URL || window.webkitURL).revokeObjectURL(save.href);
 		console.log("save to disk finished");
 	}
+
+	document.querySelector('input[type=file]').onchange = function() {
+		var file = this.files[0];
+		var reader = new window.FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = onReadAsDataURL;
+		
+		var chunkLength = 100000;
+		
+		function onReadAsDataURL(event, text) {
+		    var data = {}; // data object to transmit over data channel
+		    if (event) text = event.target.result; // on first invocation
+		    if (text.length > chunkLength) {
+			data.message = text.slice(0, chunkLength); // getting chunk using predefined chunk length
+		    } else {
+			data.message = text;
+			data.last = true;
+		    }
+		    dataConnection.send(data); // use JSON.stringify for chrome!
+		    var remainingDataURL = text.slice(data.message.length);
+		    if (remainingDataURL.length) setTimeout(function () {
+			onReadAsDataURL(null, remainingDataURL); // continue transmitting
+		    }, 10)
+		}
+	};
 
 	
 	
