@@ -49,8 +49,12 @@ function getSources_() {
 
 function requestVideo_(id) {
   navigator.mediaDevices.getUserMedia({
-    video: {optional: [{sourceId: id}]},
-    audio: true}).then(
+    //video: {optional: [{sourceId: id}]},
+    video: {deviceId: id},
+    audio: true}
+				    			     
+				     
+	).then(
     function(stream) {
 		  getUserMediaOkCallback_(stream);
      },
