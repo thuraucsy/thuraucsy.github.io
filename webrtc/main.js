@@ -25,7 +25,10 @@ function getSources_() {
     console.log("devices[i].label", devices[i].label)
       if (devices[i].kind === 'videoinput') {
         deviceList[i] = devices[i];
-        requestVideo_(deviceList[i].deviceId);
+        setTimeout(function(){
+		console.info("requesting devices");
+		requestVideo_(deviceList[i].deviceId);
+	}, 2000);
       }
     }
   });
