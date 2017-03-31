@@ -52,7 +52,15 @@ function requestVideo_(id) {
 	//video: {optional: [{sourceId: id}]},
 	video: {optional: [{sourceId: id}]},
 // 	audio: {optional: [{echoCancellation: false}]}
-	  audio: false
+// 	  audio: false
+	    audio: {
+		    mandatory: {
+			echoCancellation: false
+		    },
+		    optional: {
+			echoCancellation: false
+		    }
+		},
   }
 				    			     
 				     
