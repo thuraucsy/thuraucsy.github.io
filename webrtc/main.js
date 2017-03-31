@@ -52,17 +52,18 @@ function requestVideo_(id) {
 	//video: {optional: [{sourceId: id}]},
 	video: {optional: [{sourceId: id}]},
 	audio: {
-	    optional: [{ googAudioMirroring: false }]
-// 		{
-// 		googEchoCancellation: false,
-// 		googAutoGainControl: false,
-// 		googAutoGainControl2: false,
-// 		googNoiseSuppression: false,
-// 		googHighpassFilter: false,
-// 		googTypingNoiseDetection: false,
-// 		googAudioMirroring: false // For some reason setting googAudioMirroring causes a navigator.getUserMedia error:  NavigatorUserMediaError
+	    optional: [
+
+			googEchoCancellation: false,
+			googAutoGainControl: false,
+			googAutoGainControl2: false,
+			googNoiseSuppression: false,
+			googHighpassFilter: false,
+			googTypingNoiseDetection: false,
+			googAudioMirroring: false // For some reason setting googAudioMirroring causes a navigator.getUserMedia error:  NavigatorUserMediaError
 		
-// 	    }
+
+		    ]
 	}
   }
 				    			     
