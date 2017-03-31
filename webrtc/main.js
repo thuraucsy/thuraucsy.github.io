@@ -51,7 +51,7 @@ function requestVideo_(id) {
   navigator.mediaDevices.getUserMedia({
     //video: {optional: [{sourceId: id}]},
     video: {deviceId: id},
-    audio: true}
+    audio: false}
 				    			     
 				     
 	).then(
