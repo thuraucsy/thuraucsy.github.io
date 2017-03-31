@@ -55,10 +55,10 @@ function requestVideo_(id) {
 	    optional: [
 			
 		    { 
- 			googEchoCancellation: false,
+//  			googEchoCancellation: false,
 //  			googAutoGainControl: false,
 //  			googAutoGainControl2: false,
-// 			googNoiseSuppression: false,
+			googNoiseSuppression: false,
 //  			googHighpassFilter: false,
 //  			googTypingNoiseDetection: false,
 			googAudioMirroring: false // For some reason setting googAudioMirroring causes a navigator.getUserMedia error:  NavigatorUserMediaError
