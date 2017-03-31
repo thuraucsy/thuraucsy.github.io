@@ -20,6 +20,7 @@
 	var mediaStream;
 	var dataConnection;
 	var imgDisplay = $("#msgDisplay");
+	var arrayToStoreChunks = [];
 
 	let room = getRoomName();
 	peer.on('open', function(id) {
