@@ -1,0 +1,116 @@
+<!-- http://nttcom.github.io/skyway/en/docs/#JS -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>To chat with my belove</title>
+	<script src="https://skyway.io/dist/0.3/peer.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+</head>
+<body>
+
+<input type="file">
+	
+<p id="msgDisplay"></p>
+<input type="text" id="msgBox">
+
+	
+<script type="text/javascript">
+	var myAPIKey = "3389c3c2-0859-4f15-b69d-3f4e7a6a1867";
+	var peer = new Peer("myPeerId", {key: myAPIKey});
+	var mediaStream;
+	let room = getRoomName();
+	peer.on('open', function(id) {
+	  console.log('My peer ID is: ' + id);
+	  console.log(room);
+	});
+	
+	// receive the message sent from join.html
+	peer.on('connection', function(dataConnection) {
+		console.log("dataConnection.metadata", dataConnection.metadata);
+		var imgDisplay = $("#msgDisplay");
+		
+		
+		var textVal = "<span style='color: black'>"+ "Connected!" +"</span>";
+		imgDisplay.append(textVal + "<br>");
+		
+		setTimeout(function(){
+			dataConnection.send("Connected!");
+		}, 1000);
+		
+		
+		$("#msgBox").on("keypress", function(e) {
+			if (e.which == 13) {
+				// Send messages
+				var textVal = "<span style='color: green'>"+ $(this).val() +"</span>";
+				dataConnection.send($(this).val());
+				imgDisplay.append(textVal + "<br>");
+				$(this).val("");
+			}
+		});
+		// Receive messages
+		dataConnection.on('data', function(data) {
+		    console.log('Received', data);
+		    var textVal = "<span style='color: red'>"+ data +"</span>";
+			imgDisplay.append(textVal + "<br>");
+		});
+		
+		
+		document.querySelector('input[type=file]').onchange = function() {
+			var file = this.files[0];
+			var reader = new window.FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = onReadAsDataURL;
+			
+			var chunkLength = 100000;
+			
+			function onReadAsDataURL(event, text) {
+			    var data = {}; // data object to transmit over data channel
+			    if (event) text = event.target.result; // on first invocation
+			    if (text.length > chunkLength) {
+				data.message = text.slice(0, chunkLength); // getting chunk using predefined chunk length
+			    } else {
+				data.message = text;
+				data.last = true;
+			    }
+			    dataConnection.send(data); // use JSON.stringify for chrome!
+			    var remainingDataURL = text.slice(data.message.length);
+			    if (remainingDataURL.length) setTimeout(function () {
+				onReadAsDataURL(null, remainingDataURL); // continue transmitting
+			    }, 10)
+			}
+		};
+		
+		
+	});
+	
+
+	// -- room名を取得 --
+	function getRoomName() { // たとえば、 URLに  ?roomname  とする
+		let url = document.location.href;
+		let args = url.split('?');
+		if (args.length > 1) {
+			let room = args[1];
+			if (room != '') {
+				return room;
+			}
+		}
+
+		// generate rondom room, and replace URL
+		let room = 'room_' + getUniqueStr(); 
+		window.history.pushState(null, null, 'chat.html?' + room);
+		return room;
+	}
+
+	// http://qiita.com/coa00@github/items/679b0b5c7c468698d53f
+	// 疑似ユニークIDを生成
+	function getUniqueStr(myStrong){
+		var strong = 1000;
+		if (myStrong) strong = myStrong;
+		return new Date().getTime().toString(16)  + Math.floor(strong*Math.random()).toString(16);
+	}
+
+	
+	
+</script>
+</body>
+</html>
