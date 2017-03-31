@@ -19,6 +19,8 @@
 	var peer;
 	var mediaStream;
 	var dataConnection;
+	var imgDisplay = $("#msgDisplay");
+	
 	let room = getRoomName();
 	peer.on('open', function(id) {
 	  console.log('My peer ID is: ' + id);
@@ -28,7 +30,6 @@
 	// owner receive events
 	peer.on('connection', function(dataConnection) {
 		console.log("dataConnection.metadata", dataConnection.metadata);
-		var imgDisplay = $("#msgDisplay");
 		
 		
 		var textVal = "<span style='color: black'>"+ "Connected!" +"</span>";
