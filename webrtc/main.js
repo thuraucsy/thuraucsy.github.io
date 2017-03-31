@@ -24,16 +24,12 @@ function getSources_() {
     for (var i = 0; i < devices.length; i++) {
 	    
 		console.log("devices[i].label", devices[i].label)
-	      if (devices[i].kind === 'videoinput') {
+	      if (devices[i].kind === 'videoinput' && devices[i].deviceId) {
 		deviceList[i] = devices[i];
 		
-		      
 		  setTimeout(function(){  
 			  console.info("requesting devices");
-			  if (deviceList[i].deviceId) {
-				  requestVideo_(deviceList[i].deviceId);
-			  }
-			
+			  requestVideo_(deviceList[i].deviceId);
 		  }, 2000);
 	      }
 		 
