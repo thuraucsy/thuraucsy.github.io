@@ -27,8 +27,8 @@ function getSources_() {
 	      if (devices[i].kind === 'videoinput' && devices[i].deviceId) {
 		deviceList[i] = devices[i];
 		      var devId = devices[i].deviceId;
-// 		  	doSetTimeout(deviceList[i].deviceId);
-		      requestVideo_(deviceList[i].deviceId);
+		  	doSetTimeout(deviceList[i].deviceId);
+// 		      requestVideo_(deviceList[i].deviceId);
 		
 	      }
 		 
@@ -38,12 +38,12 @@ function getSources_() {
 	  
 	  
 	  
-// 	function doSetTimeout(dID) {
-// 	    setTimeout(function(){  
-// 		  console.info("requesting devices");
-// 		  requestVideo_(dID);
-// 	  }, 2000);
-// 	}
+	function doSetTimeout(dID) {
+	    setTimeout(function(){  
+		  console.info("requesting devices");
+		  requestVideo_(dID);
+	  }, 2000);
+	}
 
   });
 }
