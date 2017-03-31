@@ -27,8 +27,8 @@ function getSources_() {
 	      if (devices[i].kind === 'videoinput' && devices[i].deviceId) {
 		deviceList[i] = devices[i];
 		      var devId = devices[i].deviceId;
-		  	doSetTimeout(deviceList[i].deviceId);
-// 		      requestVideo_(deviceList[i].deviceId);
+// 		  	doSetTimeout(deviceList[i].deviceId);
+		      requestVideo_(deviceList[i].deviceId);
 		
 	      }
 		 
