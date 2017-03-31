@@ -103,20 +103,20 @@
 				data = 'file is receiving ...' + data.message;
 
 			} 
-
-			// joiner enter 
-			$("#msgBox").on("keypress", function(e) {
-				if (e.which == 13) {
-					// Send messages
-					var textVal = "<span style='color: green'>"+ $(this).val() +"</span>";
-					dataConnection.send($(this).val());
-					imgDisplay.append(textVal + "<br>");
-					$(this).val("");
-				}
-			});
 			
 			var textVal = "<span style='color: blue'>"+ data +"</span>";
 			imgDisplay.append(textVal + "<br>");
+		});
+
+		// joiner enter 
+		$("#msgBox").on("keypress", function(e) {
+			if (e.which == 13) {
+				// Send messages
+				var textVal = "<span style='color: green'>"+ $(this).val() +"</span>";
+				dataConnection.send($(this).val());
+				imgDisplay.append(textVal + "<br>");
+				$(this).val("");
+			}
 		});
 	}
 
