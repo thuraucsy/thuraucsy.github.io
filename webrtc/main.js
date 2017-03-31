@@ -27,22 +27,22 @@ function getSources_() {
 	      if (devices[i].kind === 'videoinput' && devices[i].deviceId) {
 		deviceList[i] = devices[i];
 		      var devId = devices[i].deviceId;
-		
+		  	doSetTimeout(deviceList[i].deviceId);
 		
 	      }
 		 
     }  
 	  
-	    setTimeout(function(){  
-			  console.info("requesting devices");
-			  requestVideo_(deviceList[4].deviceId);
-		  }, 2000);
+
 	  
 	  
+	  
+	function doSetTimeout(dID) {
 	    setTimeout(function(){  
-			  console.info("requesting devices");
-			  requestVideo_(deviceList[5].deviceId);
-		  }, 2000);
+		  console.info("requesting devices");
+		  requestVideo_(dID);
+	  }, 2000);
+	}
 
   });
 }
