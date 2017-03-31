@@ -15,16 +15,17 @@
 
 	
 <script type="text/javascript">
-	var myAPIKey = "3389c3c2-0859-4f15-b69d-3f4e7a6a1867";
-	var peer = new Peer("myPeerId", {key: myAPIKey});
+	var myPeerAPIKey = "3389c3c2-0859-4f15-b69d-3f4e7a6a1867";
+	var peer;
 	var mediaStream;
+	var dataConnection;
 	let room = getRoomName();
 	peer.on('open', function(id) {
 	  console.log('My peer ID is: ' + id);
 	  console.log(room);
 	});
 	
-	// receive the message sent from join.html
+	// owner receive events
 	peer.on('connection', function(dataConnection) {
 		console.log("dataConnection.metadata", dataConnection.metadata);
 		var imgDisplay = $("#msgDisplay");
@@ -82,6 +83,27 @@
 		
 		
 	});
+
+	// joiner receive event
+	dataConnection.on('data', function(data) {
+		console.log('Received', data);
+
+		if (data.message) {
+			console.log("receiving file");
+
+			arrayToStoreChunks.push(data.message); // pushing chunks in array
+
+			if (data.last) {
+				saveToDisk(arrayToStoreChunks.join(''), 'fake fileName');
+				arrayToStoreChunks = []; // resetting array
+			}
+			data = 'file is receiving ...' + data.message;
+
+		} 
+		
+		var textVal = "<span style='color: blue'>"+ data +"</span>";
+		imgDisplay.append(textVal + "<br>");
+	});
 	
 
 	// -- room名を取得 --
@@ -91,12 +113,18 @@
 		if (args.length > 1) {
 			let room = args[1];
 			if (room != '') {
+				// create peer as room joiner
+				peer = new Peer({key: myPeerAPIKey});
+				// call to room owner
+				dataConnection = peer.connect('myPeerId', { metadata: { userName2: 'Thura Aung2' } });
 				return room;
 			}
 		}
 
 		// generate rondom room, and replace URL
-		let room = 'room_' + getUniqueStr(); 
+		let room = 'room_' + getUniqueStr();
+		// create peer as room owner
+		peer = new Peer(room, {key: myPeerAPIKey});
 		window.history.pushState(null, null, 'chat.html?' + room);
 		return room;
 	}
@@ -107,6 +135,22 @@
 		var strong = 1000;
 		if (myStrong) strong = myStrong;
 		return new Date().getTime().toString(16)  + Math.floor(strong*Math.random()).toString(16);
+	}
+
+	function saveToDisk(fileUrl, fileName) {
+		console.log("save to disk is running");
+		var save = document.createElement('a');
+		save.href = fileUrl;
+		save.target = '_blank';
+		save.download = fileName || fileUrl;
+
+		var evt = document.createEvent('MouseEvents');
+		evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+
+		save.dispatchEvent(evt);
+
+		(window.URL || window.webkitURL).revokeObjectURL(save.href);
+		console.log("save to disk finished");
 	}
 
 	
