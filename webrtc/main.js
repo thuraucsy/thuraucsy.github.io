@@ -74,8 +74,8 @@ function getUserMediaOkCallback_(stream) {
   var div = document.createElement('div');
   div.style.float = 'left';
   video.setAttribute('id', 'view' + counter);
-  //video.width = 320;
-  //video.height = 240;
+  video.width = 320;
+  video.height = 240;
   video.autoplay = true;
   div.appendChild(video);
   videoArea.appendChild(div);
