@@ -118,7 +118,7 @@
 		if (args.length > 1) {
 			let room = args[1];
 			if (room != '') {
-				if (window.history.state === 'owner) {
+				if (window.history.state === 'owner') {
 					console.log('owner refreshing');
 					peer = new Peer(room, {key: myPeerAPIKey});
 				} else {
@@ -138,7 +138,7 @@
 		let room = 'room_' + getUniqueStr();
 		// create peer as room owner
 		peer = new Peer(room, {key: myPeerAPIKey});
-		window.history.pushState("owner", null, 'chat.html?' + room);
+		window.history.pushState('owner', null, 'chat.html?' + room);
 		return room;
 	}
 
