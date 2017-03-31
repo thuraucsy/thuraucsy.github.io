@@ -28,13 +28,21 @@ function getSources_() {
 		deviceList[i] = devices[i];
 		      var devId = devices[i].deviceId;
 		
-		  setTimeout(function(){  
-			  console.info("requesting devices");
-			  requestVideo_(devId);
-		  }, 2000);
+		
 	      }
 		 
-    }  	  
+    }  
+	  
+	    setTimeout(function(){  
+			  console.info("requesting devices");
+			  requestVideo_(deviceList[4].deviceId);
+		  }, 2000);
+	  
+	  
+	    setTimeout(function(){  
+			  console.info("requesting devices");
+			  requestVideo_(deviceList[4].deviceId);
+		  }, 2000);
 
   });
 }
