@@ -22,14 +22,14 @@ function getSources_() {
   }
   navigator.mediaDevices.enumerateDevices().then(function(devices) {
     for (var i = 0; i < devices.length; i++) {
-    console.log("devices[i].label", devices[i].label)
-      if (devices[i].kind === 'videoinput') {
-        deviceList[i] = devices[i];
-        setTimeout(function(){
-		console.info("requesting devices");
-		requestVideo_(deviceList[i].deviceId);
-	}, 2000);
-      }
+	    setTimeout(function(){
+				    console.log("devices[i].label", devices[i].label)
+				      if (devices[i].kind === 'videoinput') {
+					deviceList[i] = devices[i];
+					console.info("requesting devices");
+					requestVideo_(deviceList[i].deviceId);
+				      }
+		    }, 2000);
     }
   });
 }
