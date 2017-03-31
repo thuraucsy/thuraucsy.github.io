@@ -53,7 +53,8 @@ function requestVideo_(id) {
 	video: {optional: [{sourceId: id}]},
 	audio: {
 	    optional: [
-
+			
+		    { 
 			googEchoCancellation: false,
 			googAutoGainControl: false,
 			googAutoGainControl2: false,
@@ -61,6 +62,7 @@ function requestVideo_(id) {
 			googHighpassFilter: false,
 			googTypingNoiseDetection: false,
 			googAudioMirroring: false // For some reason setting googAudioMirroring causes a navigator.getUserMedia error:  NavigatorUserMediaError
+		    }
 		
 
 		    ]
