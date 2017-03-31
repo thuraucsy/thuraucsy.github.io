@@ -42,7 +42,13 @@
 		setTimeout(function(){
 			dataConnection.send("Connected!");
 		}, 500);
+
+		dataConnection = dataConnectionEvent(dataConnection);
 		
+	});
+
+
+	function dataConnectionEvent(dataConnection) {
 		// Receive messages
 		dataConnection.on('data', function(data) {
 			console.log('Received', data);
@@ -84,7 +90,7 @@
 			reader.readAsDataURL(file);
 			reader.onload = onReadAsDataURL;
 			
-			var chunkLength = 100000;
+			var chunkLength = 1000000;
 			
 		};
 		onReadAsDataURL = function(event, text) {
@@ -100,74 +106,11 @@
 			    var remainingDataURL = text.slice(data.message.length);
 			    if (remainingDataURL.length) setTimeout(function () {
 				onReadAsDataURL(null, remainingDataURL); // continue transmitting
-			}, 10)
+			}, 1000)
 		}
-		
-		
-	});
 
-	// joiner receive event
-	if (dataConnection) {
-		dataConnection.on('data', function(data) {
-			console.log('Received', data);
-			
-			
-
-			if (data.message) {
-				console.log("receiving file");
-
-				arrayToStoreChunks.push(data.message); // pushing chunks in array
-
-				if (data.last) {
-					saveToDisk(arrayToStoreChunks.join(''), 'fake fileName');
-					arrayToStoreChunks = []; // resetting array
-				}
-				data = 'file is receiving ...';
-
-			} 
-
-			var textVal = "<span style='color: blue'>"+ data +"</span>";
-			imgDisplay.append(textVal + "<br>");
-
-			// input file
-			document.querySelector('input[type=file]').onchange = function() {
-				var file = this.files[0];
-				var reader = new window.FileReader();
-				reader.readAsDataURL(file);
-				reader.onload = onReadAsDataURL;
-				
-				var chunkLength = 100000;
-				
-			};
-			onReadAsDataURL = function(event, text) {
-			    var data = {}; // data object to transmit over data channel
-			    if (event) text = event.target.result; // on first invocation
-			    if (text.length > chunkLength) {
-					data.message = text.slice(0, chunkLength); // getting chunk using predefined chunk length
-				} else {
-					data.message = text;
-					data.last = true;
-				}
-				    dataConnection.send(data); // use JSON.stringify for chrome!
-				    var remainingDataURL = text.slice(data.message.length);
-				    if (remainingDataURL.length) setTimeout(function () {
-					onReadAsDataURL(null, remainingDataURL); // continue transmitting
-				}, 10)
-			}
-		});
-
-		// joiner enter 
-		$("#msgBox").on("keypress", function(e) {
-			if (e.which == 13) {
-				// Send messages
-				var textVal = "<span style='color: green'>"+ $(this).val() +"</span>";
-				dataConnection.send($(this).val());
-				imgDisplay.append(textVal + "<br>");
-				$(this).val("");
-			}
-		});
+		return dataConnection;
 	}
-
 
 	/*COMMON FUNCTION*/
 	function getRoomName() { // たとえば、 URLに  ?roomname  とする
@@ -180,6 +123,7 @@
 				peer = new Peer({key: myPeerAPIKey});
 				// call to room owner
 				dataConnection = peer.connect(room, { metadata: { userName2: 'Thura Aung2' } });
+				dataConnection = dataConnectionEvent(dataConnection);
 				return room;
 			}
 		}
