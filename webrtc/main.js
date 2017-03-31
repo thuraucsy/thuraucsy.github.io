@@ -50,17 +50,19 @@ function getSources_() {
 function requestVideo_(id) {
   navigator.mediaDevices.getUserMedia({
 	//video: {optional: [{sourceId: id}]},
-	video: {deviceId: id},
+	video: {optional: [{deviceId: id}]},
 	audio: {
-	    mandatory: {
+	    optional: [{ googAudioMirroring: false }]
+// 		{
 // 		googEchoCancellation: false,
 // 		googAutoGainControl: false,
 // 		googAutoGainControl2: false,
 // 		googNoiseSuppression: false,
 // 		googHighpassFilter: false,
 // 		googTypingNoiseDetection: false,
-		googAudioMirroring: false // For some reason setting googAudioMirroring causes a navigator.getUserMedia error:  NavigatorUserMediaError
-	    }
+// 		googAudioMirroring: false // For some reason setting googAudioMirroring causes a navigator.getUserMedia error:  NavigatorUserMediaError
+		
+// 	    }
 	}
   }
 				    			     
