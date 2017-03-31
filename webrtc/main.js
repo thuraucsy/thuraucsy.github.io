@@ -84,15 +84,16 @@ function getUserMediaOkCallback_(stream) {
   div.appendChild(video);
   videoArea.appendChild(div);
 	
-  document.getElementById('view' + counter).src = URL.createObjectURL(stream);
+//   document.getElementById('view' + counter).src = URL.createObjectURL(stream);
 	
-//   if (typeof stream.getVideoTracks()[0].label !== 'undefined') {
-//     var deviceLabel = document.createElement('p');
-//     deviceLabel.innerHTML = stream.getVideoTracks()[0].label;
-//     div.appendChild(deviceLabel);
-//   }
-//   stream.getVideoTracks()[0].addEventListener('ended', errorMessage_);
-//   document.getElementById('view' + counter).srcObject = stream;
+  if (typeof stream.getVideoTracks()[0].label !== 'undefined') {
+    var deviceLabel = document.createElement('p');
+    deviceLabel.innerHTML = stream.getVideoTracks()[0].label;
+    div.appendChild(deviceLabel);
+  }
+  stream.getVideoTracks()[0].addEventListener('ended', errorMessage_);
+  document.getElementById('view' + counter).srcObject = stream;
+	
   counter++;
 }
 
