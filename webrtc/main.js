@@ -56,8 +56,8 @@ function requestVideo_(id) {
 			
 		    { 
 // 			googEchoCancellation: false,
- 			googAutoGainControl: false,
- 			googAutoGainControl2: false,
+//  			googAutoGainControl: false,
+//  			googAutoGainControl2: false,
 // 			googNoiseSuppression: false,
 // 			googHighpassFilter: false,
 // 			googTypingNoiseDetection: false,
