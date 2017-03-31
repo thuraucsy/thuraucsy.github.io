@@ -29,7 +29,7 @@ function getSources_() {
 		
 		  setTimeout(function(){  
 			  console.info("requesting devices");
-			  requestVideo_(deviceList[i].deviceId);
+			  requestVideo_(devices[i].deviceId);
 		  }, 2000);
 	      }
 		 
