@@ -29,16 +29,7 @@
 	  console.log(room);
 	});
 
-	// input file
-	document.querySelector('input[type=file]').onchange = function() {
-		var file = this.files[0];
-		var reader = new window.FileReader();
-		reader.readAsDataURL(file);
-		reader.onload = onReadAsDataURL;
-		
-		var chunkLength = 100000;
-		
-	};
+	
 	
 	// owner receive events
 	peer.on('connection', function(dataConnection) {
@@ -86,6 +77,16 @@
 			}
 		});
 
+		// input file
+		document.querySelector('input[type=file]').onchange = function() {
+			var file = this.files[0];
+			var reader = new window.FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = onReadAsDataURL;
+			
+			var chunkLength = 100000;
+			
+		};
 		onReadAsDataURL = function(event, text) {
 		    var data = {}; // data object to transmit over data channel
 		    if (event) text = event.target.result; // on first invocation
@@ -128,6 +129,16 @@
 			var textVal = "<span style='color: blue'>"+ data +"</span>";
 			imgDisplay.append(textVal + "<br>");
 
+			// input file
+			document.querySelector('input[type=file]').onchange = function() {
+				var file = this.files[0];
+				var reader = new window.FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = onReadAsDataURL;
+				
+				var chunkLength = 100000;
+				
+			};
 			onReadAsDataURL = function(event, text) {
 			    var data = {}; // data object to transmit over data channel
 			    if (event) text = event.target.result; // on first invocation
