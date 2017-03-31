@@ -67,24 +67,28 @@ function getUserMediaFailedCallback_(error) {
   alert('User media request denied with error: ' + error.name);
 }
 
-function getUserMediaOkCallback_(stream) {
+function getUserMediaOkCallback_(stream) {	
+	
   var videoArea = document.getElementById('videoArea');
   var video = document.createElement('video');
   var div = document.createElement('div');
   div.style.float = 'left';
   video.setAttribute('id', 'view' + counter);
-  video.width = 320;
-  video.height = 240;
+  //video.width = 320;
+  //video.height = 240;
   video.autoplay = true;
   div.appendChild(video);
   videoArea.appendChild(div);
-  if (typeof stream.getVideoTracks()[0].label !== 'undefined') {
-    var deviceLabel = document.createElement('p');
-    deviceLabel.innerHTML = stream.getVideoTracks()[0].label;
-    div.appendChild(deviceLabel);
-  }
-  stream.getVideoTracks()[0].addEventListener('ended', errorMessage_);
-  document.getElementById('view' + counter).srcObject = stream;
+	
+  document.getElementById('view' + counter).src = URL.createObjectURL(stream);
+	
+//   if (typeof stream.getVideoTracks()[0].label !== 'undefined') {
+//     var deviceLabel = document.createElement('p');
+//     deviceLabel.innerHTML = stream.getVideoTracks()[0].label;
+//     div.appendChild(deviceLabel);
+//   }
+//   stream.getVideoTracks()[0].addEventListener('ended', errorMessage_);
+//   document.getElementById('view' + counter).srcObject = stream;
   counter++;
 }
 
