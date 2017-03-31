@@ -42,10 +42,9 @@
 		
 		// Receive messages
 		dataConnection.on('data', function(data) {
-		    console.log('Received', data);
+		    console.log('Receiving file', data);
 
 		    if (data.message) {
-				console.log("receiving file");
 
 				arrayToStoreChunks.push(data.message); // pushing chunks in array
 
@@ -53,7 +52,7 @@
 					saveToDisk(arrayToStoreChunks.join(''), 'fake fileName');
 					arrayToStoreChunks = []; // resetting array
 				}
-				data = 'file is receiving ...' + data.message;
+				data = 'file is receiving ...';
 
 			} 
 
