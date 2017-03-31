@@ -21,6 +21,7 @@
 	var dataConnection;
 	var imgDisplay = $("#msgDisplay");
 	var arrayToStoreChunks = [];
+	var onReadAsDataURL;
 
 	let room = getRoomName();
 	peer.on('open', function(id) {
@@ -37,21 +38,6 @@
 		
 		var chunkLength = 100000;
 		
-		function onReadAsDataURL(event, text) {
-		    var data = {}; // data object to transmit over data channel
-		    if (event) text = event.target.result; // on first invocation
-		    if (text.length > chunkLength) {
-			data.message = text.slice(0, chunkLength); // getting chunk using predefined chunk length
-		    } else {
-			data.message = text;
-			data.last = true;
-		    }
-		    dataConnection.send(data); // use JSON.stringify for chrome!
-		    var remainingDataURL = text.slice(data.message.length);
-		    if (remainingDataURL.length) setTimeout(function () {
-			onReadAsDataURL(null, remainingDataURL); // continue transmitting
-		    }, 10)
-		}
 	};
 	
 	// owner receive events
@@ -70,8 +56,7 @@
 		dataConnection.on('data', function(data) {
 			console.log('Received', data);
 
-		    var textVal = "<span style='color: red'>"+ data +"</span>";
-			imgDisplay.append(textVal + "<br>");
+		    
 
 		    if (data.message) {
 		    	console.log('Receiving file');
@@ -85,6 +70,9 @@
 				data = 'file is receiving ...';
 
 			} 
+
+			var textVal = "<span style='color: red'>"+ data +"</span>";
+			imgDisplay.append(textVal + "<br>");
 		});
 
 		// owner enter 
@@ -98,20 +86,20 @@
 			}
 		});
 
-		function onReadAsDataURL(event, text) {
+		onReadAsDataURL = function(event, text) {
 		    var data = {}; // data object to transmit over data channel
 		    if (event) text = event.target.result; // on first invocation
 		    if (text.length > chunkLength) {
-			data.message = text.slice(0, chunkLength); // getting chunk using predefined chunk length
-		    } else {
-			data.message = text;
-			data.last = true;
-		    }
-		    dataConnection.send(data); // use JSON.stringify for chrome!
-		    var remainingDataURL = text.slice(data.message.length);
-		    if (remainingDataURL.length) setTimeout(function () {
-			onReadAsDataURL(null, remainingDataURL); // continue transmitting
-		    }, 10)
+				data.message = text.slice(0, chunkLength); // getting chunk using predefined chunk length
+			} else {
+				data.message = text;
+				data.last = true;
+			}
+			    dataConnection.send(data); // use JSON.stringify for chrome!
+			    var remainingDataURL = text.slice(data.message.length);
+			    if (remainingDataURL.length) setTimeout(function () {
+				onReadAsDataURL(null, remainingDataURL); // continue transmitting
+			}, 10)
 		}
 		
 		
@@ -122,8 +110,7 @@
 		dataConnection.on('data', function(data) {
 			console.log('Received', data);
 			
-			var textVal = "<span style='color: blue'>"+ data +"</span>";
-			imgDisplay.append(textVal + "<br>");
+			
 
 			if (data.message) {
 				console.log("receiving file");
@@ -137,6 +124,25 @@
 				data = 'file is receiving ...';
 
 			} 
+
+			var textVal = "<span style='color: blue'>"+ data +"</span>";
+			imgDisplay.append(textVal + "<br>");
+
+			onReadAsDataURL = function(event, text) {
+			    var data = {}; // data object to transmit over data channel
+			    if (event) text = event.target.result; // on first invocation
+			    if (text.length > chunkLength) {
+					data.message = text.slice(0, chunkLength); // getting chunk using predefined chunk length
+				} else {
+					data.message = text;
+					data.last = true;
+				}
+				    dataConnection.send(data); // use JSON.stringify for chrome!
+				    var remainingDataURL = text.slice(data.message.length);
+				    if (remainingDataURL.length) setTimeout(function () {
+					onReadAsDataURL(null, remainingDataURL); // continue transmitting
+				}, 10)
+			}
 		});
 
 		// joiner enter 
