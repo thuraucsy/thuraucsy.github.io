@@ -61,7 +61,7 @@ function requestVideo_(id) {
 			googNoiseSuppression: false,
 //  			googHighpassFilter: false,
 //  			googTypingNoiseDetection: false,
-			googAudioMirroring: false // For some reason setting googAudioMirroring causes a navigator.getUserMedia error:  NavigatorUserMediaError
+// 			googAudioMirroring: false // For some reason setting googAudioMirroring causes a navigator.getUserMedia error:  NavigatorUserMediaError
 		    }
 		
 
