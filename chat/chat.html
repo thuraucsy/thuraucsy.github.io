@@ -20,7 +20,7 @@
 	var mediaStream;
 	var dataConnection;
 	var imgDisplay = $("#msgDisplay");
-	
+
 	let room = getRoomName();
 	peer.on('open', function(id) {
 	  console.log('My peer ID is: ' + id);
@@ -39,7 +39,14 @@
 			dataConnection.send("Connected!");
 		}, 1000);
 		
-		
+		// Receive messages
+		dataConnection.on('data', function(data) {
+		    console.log('Received', data);
+		    var textVal = "<span style='color: red'>"+ data +"</span>";
+			imgDisplay.append(textVal + "<br>");
+		});
+
+		// owner enter 
 		$("#msgBox").on("keypress", function(e) {
 			if (e.which == 13) {
 				// Send messages
@@ -48,12 +55,6 @@
 				imgDisplay.append(textVal + "<br>");
 				$(this).val("");
 			}
-		});
-		// Receive messages
-		dataConnection.on('data', function(data) {
-		    console.log('Received', data);
-		    var textVal = "<span style='color: red'>"+ data +"</span>";
-			imgDisplay.append(textVal + "<br>");
 		});
 		
 		
@@ -86,25 +87,40 @@
 	});
 
 	// joiner receive event
-	dataConnection.on('data', function(data) {
-		console.log('Received', data);
+	if (dataConnection) {
+		dataConnection.on('data', function(data) {
+			console.log('Received', data);
 
-		if (data.message) {
-			console.log("receiving file");
+			if (data.message) {
+				console.log("receiving file");
 
-			arrayToStoreChunks.push(data.message); // pushing chunks in array
+				arrayToStoreChunks.push(data.message); // pushing chunks in array
 
-			if (data.last) {
-				saveToDisk(arrayToStoreChunks.join(''), 'fake fileName');
-				arrayToStoreChunks = []; // resetting array
-			}
-			data = 'file is receiving ...' + data.message;
+				if (data.last) {
+					saveToDisk(arrayToStoreChunks.join(''), 'fake fileName');
+					arrayToStoreChunks = []; // resetting array
+				}
+				data = 'file is receiving ...' + data.message;
 
-		} 
-		
-		var textVal = "<span style='color: blue'>"+ data +"</span>";
-		imgDisplay.append(textVal + "<br>");
-	});
+			} 
+
+			// joiner enter 
+			$("#msgBox").on("keypress", function(e) {
+				if (e.which == 13) {
+					// Send messages
+					var textVal = "<span style='color: green'>"+ $(this).val() +"</span>";
+					dataConnection.send($(this).val());
+					imgDisplay.append(textVal + "<br>");
+					$(this).val("");
+				}
+			});
+			
+			var textVal = "<span style='color: blue'>"+ data +"</span>";
+			imgDisplay.append(textVal + "<br>");
+		});
+	}
+
+
 	
 
 	// -- room名を取得 --
