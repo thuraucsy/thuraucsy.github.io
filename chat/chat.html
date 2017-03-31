@@ -116,7 +116,7 @@
 				// create peer as room joiner
 				peer = new Peer({key: myPeerAPIKey});
 				// call to room owner
-				dataConnection = peer.connect('myPeerId', { metadata: { userName2: 'Thura Aung2' } });
+				dataConnection = peer.connect(room, { metadata: { userName2: 'Thura Aung2' } });
 				return room;
 			}
 		}
