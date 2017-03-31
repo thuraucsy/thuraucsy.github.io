@@ -50,7 +50,7 @@ function getSources_() {
 function requestVideo_(id) {
   navigator.mediaDevices.getUserMedia({
 	//video: {optional: [{sourceId: id}]},
-	video: {optional: [{deviceId: id}]},
+	video: {optional: [{sourceId: id}]},
 	audio: {
 	    optional: [{ googAudioMirroring: false }]
 // 		{
