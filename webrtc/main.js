@@ -41,7 +41,7 @@ function getSources_() {
 	  
 	    setTimeout(function(){  
 			  console.info("requesting devices");
-			  requestVideo_(deviceList[4].deviceId);
+			  requestVideo_(deviceList[5].deviceId);
 		  }, 2000);
 
   });
