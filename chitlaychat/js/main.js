@@ -102,6 +102,27 @@ $(function(){
         console.log(knayi.fontDetect(msg));
         return knayi.fontConvert(msg, 'unicode');
     }
+    
+    function getCaret(el) { 
+        if (el.selectionStart) { 
+            return el.selectionStart; 
+        } else if (document.selection) { 
+            el.focus(); 
+
+            var r = document.selection.createRange(); 
+            if (r == null) { 
+                return 0; 
+            } 
+
+            var re = el.createTextRange(), 
+                rc = re.duplicate(); 
+            re.moveToBookmark(r.getBookmark()); 
+            rc.setEndPoint('EndToStart', re); 
+
+            return rc.text.length; 
+        }  
+        return 0; 
+    }
 
     function dataConnectionEvent(dataConnection) {
 		dataConnection.on('data', function(data) {
@@ -146,8 +167,18 @@ $(function(){
 		// 	}
 		// };
 
-        $("input.textarea").on("keypress", function(e) {
-            if (e.which == 13) {
+        $(".textarea").on("keypress", function(e) {
+            if (e.shiftKey && e.which == 13) {
+                console.log('shift + enter');
+                var content = this.value;
+                var caret = getCaret(this);
+                if (caret === content.length) {
+                    this.value = content.substring(0,caret);
+                } else {
+                    this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
+                }
+                event.stopPropagation();
+            } else if (e.which == 13) {
                 console.log('enter');
                 var textVal = $(this).val();
                 if (textVal) {
@@ -169,5 +200,6 @@ $(function(){
 
 		return dataConnection;
 	}
+
 
 });

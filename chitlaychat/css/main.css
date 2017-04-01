@@ -300,7 +300,7 @@ emoji.funny{background-image: url(http://i.imgur.com/qKia58V.png);}*/
 
 /* T Y P E */
 
-input.textarea {
+.textarea {
     position: fixed;
     bottom: 0px;
     left: 0px;
