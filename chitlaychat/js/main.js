@@ -63,13 +63,17 @@ $(function(){
 		console.log("save to disk finished");
 	}
 
-    function convertHtml(msg) {
-        return '<div class="avatar"><img src="http://i.imgur.com/DY6gND0.png" draggable="false"/></div>' +
-        '<div class="msg myanmar3">' +
-            '<p>'+ data +'</p>' +
-            '<p>Te vienes a cenar al centro? <emoji class="pizza"/></p>' +
-            '<time>20:17</time>' +
-        '</div>';
+    function convertHtml(msg, where) {
+        return 
+        '<li class='+ where +'>' +
+            '<div class="avatar"><img src="img/DY6gND0.png" draggable="false"/></div>' +
+            '<div class="avatar"><img src="http://i.imgur.com/DY6gND0.png" draggable="false"/></div>' +
+                '<div class="msg myanmar3">' +
+                '<p>'+ data +'</p>' +
+                '<p>Te vienes a cenar al centro? <emoji class="pizza"/></p>' +
+                '<time>20:17</time>' +
+            '</div>' +
+        '</li>';
     }
 
     function dataConnectionEvent(dataConnection) {
@@ -86,7 +90,7 @@ $(function(){
 				}
 				data = 'file is receiving ...';
 			} 
-			chat.other.append(convertHtml(data));
+			chat.append(convertHtml(data, 'other'));
 		});
 
 		// owner enter 
@@ -95,7 +99,7 @@ $(function(){
                 console.log('enter');
 				var textVal = $(this).val();
 				dataConnection.send(textVal);
-				chat.self.append(convertHtml(textVal));
+				chat.append(convertHtml(textVal, 'self'));
 				$(this).val("");
 			}
 		});

@@ -237,7 +237,7 @@ a{
     margin-right: 4px;
 }
 
-emoji{
+/*emoji{
     display: inline-block;
     height: 18px;
     width: 18px;
@@ -257,7 +257,7 @@ emoji.moai{background-image: url(http://imgur.com/uSpaYy8.png);}
 emoji.suffocated{background-image: url(http://i.imgur.com/jfTyB5F.png);}
 emoji.scream{background-image: url(http://i.imgur.com/tOLNJgg.png);}
 emoji.hearth_blue{background-image: url(http://i.imgur.com/gR9juts.png);}
-emoji.funny{background-image: url(http://i.imgur.com/qKia58V.png);}
+emoji.funny{background-image: url(http://i.imgur.com/qKia58V.png);}*/
 
 @-webikt-keyframes pulse {
   from { opacity: 0; }
@@ -323,7 +323,7 @@ input.textarea {
     left: 7px;
     width: 34px;
     height: 34px;
-    background-image: url(http://i.imgur.com/5WUpcPZ.png);
+    background-image: url(../img/favorite.svg);
     background-repeat: no-repeat;
     background-size: cover;
     z-index: 100;
