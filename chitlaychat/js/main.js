@@ -105,30 +105,30 @@ $(function(){
 		});
 
 		// input file
-		document.querySelector('input[type=file]').onchange = function() {
-			var file = this.files[0];
-			var reader = new window.FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = onReadAsDataURL;
+		// document.querySelector('input[type=file]').onchange = function() {
+		// 	var file = this.files[0];
+		// 	var reader = new window.FileReader();
+		// 	reader.readAsDataURL(file);
+		// 	reader.onload = onReadAsDataURL;
 			
-			var chunkLength = 1000000;
+		// 	var chunkLength = 1000000;
 
-			function onReadAsDataURL(event, text) {
-			    var data = {}; // data object to transmit over data channel
-			    if (event) text = event.target.result; // on first invocation
-			    if (text.length > chunkLength) {
-					data.message = text.slice(0, chunkLength); // getting chunk using predefined chunk length
-				} else {
-					data.message = text;
-					data.last = true;
-				}
-				    dataConnection.send(data); // use JSON.stringify for chrome!
-				    var remainingDataURL = text.slice(data.message.length);
-				    if (remainingDataURL.length) setTimeout(function () {
-					onReadAsDataURL(null, remainingDataURL); // continue transmitting
-				}, 1000)
-			}
-		};
+		// 	function onReadAsDataURL(event, text) {
+		// 	    var data = {}; // data object to transmit over data channel
+		// 	    if (event) text = event.target.result; // on first invocation
+		// 	    if (text.length > chunkLength) {
+		// 			data.message = text.slice(0, chunkLength); // getting chunk using predefined chunk length
+		// 		} else {
+		// 			data.message = text;
+		// 			data.last = true;
+		// 		}
+		// 		    dataConnection.send(data); // use JSON.stringify for chrome!
+		// 		    var remainingDataURL = text.slice(data.message.length);
+		// 		    if (remainingDataURL.length) setTimeout(function () {
+		// 			onReadAsDataURL(null, remainingDataURL); // continue transmitting
+		// 		}, 1000)
+		// 	}
+		// };
 		
 
 		return dataConnection;
