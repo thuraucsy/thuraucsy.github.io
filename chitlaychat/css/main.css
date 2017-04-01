@@ -1,5 +1,5 @@
-@import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700);
-@import url(http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
+@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
 
 html, body {
     background: #e5e5e5;
@@ -331,4 +331,14 @@ input.textarea {
 }
 .emojis:active {
     opacity: 0.9;
+}
+
+/* Myanmar 3 font embed */          
+@font-face {
+    font-family: 'myanmar3';
+    src: local('myanmar3'), url('../font/myanmar3.woff') format('woff'), url('../font/myanmar3.ttf') format('ttf');
+}
+
+.myanmar3{
+    font-family: myanmar3 !important;
 }
