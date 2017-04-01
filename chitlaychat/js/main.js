@@ -9,6 +9,22 @@ $(function(){
     // Get the room name for chat
     let room = getRoomName();
 
+    // Room owner connection get
+    peer.on('connection', function(dataConnection) {
+		console.log("dataConnection.metadata", dataConnection.metadata);
+		
+		
+		var textVal = "<span style='color: black'>"+ "Connected!" +"</span>";
+		imgDisplay.append(textVal + "<br>");
+		
+		setTimeout(function(){
+			dataConnection.send("Connected!");
+		}, 500);
+
+		dataConnection = dataConnectionEvent(dataConnection);
+		
+	});
+
     // Global Functions
     function getRoomName() {
 		let url = document.location.href;
@@ -26,6 +42,7 @@ $(function(){
 					peer = new Peer({key: myPeerAPIKey});
 					// call to room owner
 					dataConnection = peer.connect(room);
+                    // room joiner connection get
 					dataConnection = dataConnectionEvent(dataConnection);
 				}
 				
@@ -64,13 +81,10 @@ $(function(){
 	}
 
     function convertHtml(msg, where) {
-        return 
-        '<li class='+ where +'>' +
+        return '<li class='+ where +'>' +
             '<div class="avatar"><img src="img/DY6gND0.png" draggable="false"/></div>' +
-            '<div class="avatar"><img src="http://i.imgur.com/DY6gND0.png" draggable="false"/></div>' +
                 '<div class="msg myanmar3">' +
-                '<p>'+ data +'</p>' +
-                '<p>Te vienes a cenar al centro? <emoji class="pizza"/></p>' +
+                '<p>'+ msg +'</p>' +
                 '<time>20:17</time>' +
             '</div>' +
         '</li>';
@@ -93,7 +107,6 @@ $(function(){
 			chat.append(convertHtml(data, 'other'));
 		});
 
-		// owner enter 
 		$("input.textarea").on("keypress", function(e) {
 			if (e.which == 13) {
                 console.log('enter');
