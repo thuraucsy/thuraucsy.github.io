@@ -11,14 +11,11 @@ $(function(){
 
     // Room owner connection get
     peer.on('connection', function(dataConnection) {
-		console.log("dataConnection.metadata", dataConnection.metadata);
-		
-		
-		var textVal = "<span style='color: black'>"+ "Connected!" +"</span>";
-		imgDisplay.append(textVal + "<br>");
+
+		chat.append(convertHtml("Connected Now", 'other'));
 		
 		setTimeout(function(){
-			dataConnection.send("Connected!");
+			dataConnection.send("Connected Now!");
 		}, 500);
 
 		dataConnection = dataConnectionEvent(dataConnection);
