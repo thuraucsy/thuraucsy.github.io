@@ -15,7 +15,7 @@ $(function(){
 		chat.append(convertHtml("သင့်တောင်းဆိုမှုကို တစ်ဖက်သူမှ လက်ခံလိုက်ပါပြီ။ 😃", 'other'));
 		
 		setTimeout(function(){
-			dataConnection.send("စကားပြောဖို့ အဆင်သင့်ဖြစ်ပါပြီ။ 😄");
+			dataConnection.send("စကားပြောဖို့ အဆင်သင့်ဖြစ်ပါပြီ။ :)");
 		}, 500);
 
 		dataConnection = dataConnectionEvent(dataConnection);
