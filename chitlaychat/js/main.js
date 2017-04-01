@@ -12,10 +12,10 @@ $(function(){
     // Room owner connection get
     peer.on('connection', function(dataConnection) {
 
-		chat.append(convertHtml("Connected Now", 'other'));
+		chat.append(convertHtml("သင့်တောင်းဆိုမှုကို တစ်ဖက်သူမှ လက်ခံလိုက်ပါပြီ။ 😃", 'other'));
 		
 		setTimeout(function(){
-			dataConnection.send("Connected Now!");
+			dataConnection.send("စကားပြောဖို့ အဆင်သင့်ဖြစ်ပါပြီ။ 😄");
 		}, 500);
 
 		dataConnection = dataConnectionEvent(dataConnection);
@@ -84,11 +84,18 @@ $(function(){
         }
         return '<li class='+ where +'>' +
             '<div class="avatar"><img src="img/'+ img +'" draggable="false"/></div>' +
-                '<div class="msg myanmar3">' +
+                '<div class="msg">' +
                 '<p>'+ msg +'</p>' +
-                '<time>20:17</time>' +
+                '<time>'+ getHrMin() +'</time>' +
             '</div>' +
         '</li>';
+    }
+
+    function getHrMin() {
+        let d = new Date(),
+            h = d.getHours();
+            m = d.getMinutes();
+        return h + ':' + m;
     }
 
     function convertToUni(msg) {
