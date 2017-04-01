@@ -87,6 +87,11 @@ $(function(){
         '</li>';
     }
 
+    function convertToUni(msg) {
+        console.log(knayi.fontDetect(msg));
+        return knayi.fontConvert(msg, 'unicode');
+    }
+
     function dataConnectionEvent(dataConnection) {
 		dataConnection.on('data', function(data) {
 			console.log('Received data is', data);
@@ -102,16 +107,6 @@ $(function(){
 				data = 'file is receiving ...';
 			} 
 			chat.append(convertHtml(data, 'other'));
-		});
-
-		$("input.textarea").on("keypress", function(e) {
-			if (e.which == 13) {
-                console.log('enter');
-				var textVal = $(this).val();
-				dataConnection.send(textVal);
-				chat.append(convertHtml(textVal, 'self'));
-				$(this).val("");
-			}
 		});
 
 		// input file
@@ -143,5 +138,25 @@ $(function(){
 
 		return dataConnection;
 	}
+
+    $("input.textarea").on("keypress", function(e) {
+        if (e.which == 13) {
+            console.log('enter');
+            var textVal = $(this).val();
+            if (textVal) {
+                // convert to uni if zawgyi
+                textVal = convertToUni(textVal);
+                console.log('converted msg', textVal);
+
+                if (!dataConnection) {
+                    alert('You must first connect to chat');
+                    return;
+                }
+                dataConnection.send(textVal);
+                chat.append(convertHtml(textVal, 'self'));
+                $(this).val("");
+            }
+        }
+    });
 
 });
