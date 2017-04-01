@@ -78,8 +78,12 @@ $(function(){
 	}
 
     function convertHtml(msg, where) {
+        var img = 'DY6gND0.png'; // default is other
+        if (where == 'self') {
+            img = 'HYcn9xO.png';
+        }
         return '<li class='+ where +'>' +
-            '<div class="avatar"><img src="img/DY6gND0.png" draggable="false"/></div>' +
+            '<div class="avatar"><img src="img/'+ img +'" draggable="false"/></div>' +
                 '<div class="msg myanmar3">' +
                 '<p>'+ msg +'</p>' +
                 '<time>20:17</time>' +
@@ -134,29 +138,29 @@ $(function(){
 		// 		}, 1000)
 		// 	}
 		// };
+
+        $("input.textarea").on("keypress", function(e) {
+            if (e.which == 13) {
+                console.log('enter');
+                var textVal = $(this).val();
+                if (textVal) {
+                    // convert to uni if zawgyi
+                    textVal = convertToUni(textVal);
+                    console.log('converted msg', textVal);
+
+                    if (!dataConnection) {
+                        alert('You must first connect to chat');
+                        return;
+                    }
+                    dataConnection.send(textVal);
+                    chat.append(convertHtml(textVal, 'self'));
+                    $(this).val("");
+                }
+            }
+        });
 		
 
 		return dataConnection;
 	}
-
-    $("input.textarea").on("keypress", function(e) {
-        if (e.which == 13) {
-            console.log('enter');
-            var textVal = $(this).val();
-            if (textVal) {
-                // convert to uni if zawgyi
-                textVal = convertToUni(textVal);
-                console.log('converted msg', textVal);
-
-                if (!dataConnection) {
-                    alert('You must first connect to chat');
-                    return;
-                }
-                dataConnection.send(textVal);
-                chat.append(convertHtml(textVal, 'self'));
-                $(this).val("");
-            }
-        }
-    });
 
 });
