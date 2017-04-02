@@ -15,7 +15,7 @@ $(function(){
 		chat.append(convertHtml("သင့်တောင်းဆိုမှုကို လက်ခံလိုက်ပါပြီ။ 😊😍", 'other'));
 		
 		setTimeout(function(){
-			dataConnection.send("စာပို့ရန် အဆင်သင့်ဖြစ်ပါပြီ။");
+			dataConnection.send("Ready!");
 		}, 500);
 
 		dataConnection = dataConnectionEvent(dataConnection);
@@ -168,7 +168,7 @@ $(function(){
 		// 	}
 		// };
 
-        $(".textarea").on("keypress", function(e) {
+        $(".textarea").off("keypress").on("keypress", function(e) {
             if (e.shiftKey && e.which == 13) {
                 console.log('shift + enter');
                 var content = this.value;
