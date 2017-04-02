@@ -178,6 +178,7 @@ $(function(){
                 } else {
                     this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
                 }
+                e.preventDefault();
             } else if (e.which == 13) {
                 console.log('enter');
                 var textVal = $(this).val();
@@ -190,8 +191,9 @@ $(function(){
                     chat.animate({scrollTop: chat.prop("scrollHeight")}, 500); // scroll to bottom
                     $(".textarea").val("").focus();
                 }
+                e.preventDefault();
             }
-            e.preventDefault();
+            
         });
 		
 
