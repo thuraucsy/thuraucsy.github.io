@@ -12,10 +12,10 @@ $(function(){
     // Room owner connection get
     peer.on('connection', function(dataConnection) {
 
-		chat.append(convertHtml("သင့်တောင်းဆိုမှုကို တစ်ဖက်သူမှ လက်ခံလိုက်ပါပြီ။ 😃", 'other'));
+		chat.append(convertHtml("သင့်တောင်းဆိုမှုကို လက်ခံလိုက်ပါပြီ။ 😊😍", 'other'));
 		
 		setTimeout(function(){
-			dataConnection.send("Ready!");
+			dataConnection.send("စာပို့ရန် အဆင်သင့်ဖြစ်ပါပြီ။ 😃😍");
 		}, 500);
 
 		dataConnection = dataConnectionEvent(dataConnection);
@@ -139,6 +139,7 @@ $(function(){
 				data = 'file is receiving ...';
 			} 
 			chat.append(convertHtml(data, 'other'));
+            chat.animate({scrollTop: chat.prop("scrollHeight")}, 500); // scroll to bottom
 		});
 
 		// input file
@@ -177,7 +178,7 @@ $(function(){
                 } else {
                     this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
                 }
-                event.stopPropagation();
+                e.stopPropagation();
             } else if (e.which == 13) {
                 console.log('enter');
                 var textVal = $(this).val();
@@ -185,13 +186,9 @@ $(function(){
                     // convert to uni if zawgyi
                     textVal = convertToUni(textVal);
                     console.log('converted msg', textVal);
-
-                    if (!dataConnection) {
-                        alert('You must first connect to chat');
-                        return;
-                    }
                     dataConnection.send(textVal);
                     chat.append(convertHtml(textVal, 'self'));
+                    chat.animate({scrollTop: chat.prop("scrollHeight")}, 500); // scroll to bottom
                     $(this).val("");
                 }
             }
@@ -200,6 +197,13 @@ $(function(){
 
 		return dataConnection;
 	}
+
+    $(".textarea").on("keypress", function(e) {
+        if (e.which == 13) {
+            alert('You must first connect to chat');
+            e.stopPropagation();
+        }
+    });
 
 
 });
