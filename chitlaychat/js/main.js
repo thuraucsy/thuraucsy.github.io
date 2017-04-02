@@ -178,7 +178,6 @@ $(function(){
                 } else {
                     this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
                 }
-                e.stopPropagation();
             } else if (e.which == 13) {
                 console.log('enter');
                 var textVal = $(this).val();
@@ -192,6 +191,7 @@ $(function(){
                     $(".textarea").val("").focus();
                 }
             }
+            e.preventDefault();
         });
 		
 
