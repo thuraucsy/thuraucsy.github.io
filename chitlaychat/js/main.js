@@ -189,7 +189,7 @@ $(function(){
                     dataConnection.send(textVal);
                     chat.append(convertHtml(textVal, 'self'));
                     chat.animate({scrollTop: chat.prop("scrollHeight")}, 500); // scroll to bottom
-                    $(this).val("");
+                    $(".textarea").val("").focus();
                 }
             }
         });
@@ -198,12 +198,12 @@ $(function(){
 		return dataConnection;
 	}
 
-    $(".textarea").on("keypress", function(e) {
-        if (e.which == 13) {
-            alert('You must first connect to chat');
-            e.stopPropagation();
-        }
-    });
+    // $(".textarea").on("keypress", function(e) {
+    //     if (e.which == 13) {
+    //         alert('You must first connect to chat');
+    //         e.stopPropagation();
+    //     }
+    // });
 
 
 });
