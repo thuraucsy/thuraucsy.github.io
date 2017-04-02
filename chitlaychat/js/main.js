@@ -178,7 +178,6 @@ $(function(){
                 } else {
                     this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
                 }
-                e.preventDefault();
             } else if (e.which == 13) {
                 console.log('enter');
                 var textVal = $(this).val();
