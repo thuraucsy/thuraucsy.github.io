@@ -9,6 +9,54 @@ $(function(){
     // Get the room name for chat
     let room = getRoomName();
 
+    // firebase api
+    let config = {
+        apiKey: "AIzaSyC9Kl-69iZWt0Qdr36c3mcCMnVm1kLE8z4",  
+        databaseURL: "https://testchat-b9308.firebaseio.com/",
+    };
+    let databaseRoot = 'myapp/multi/';
+    firebase.initializeApp(config);
+    let database = firebase.database();
+    let roomBroadcastRef;
+    let peerConnections = [];
+
+    joinRoom(room);
+
+    function joinRoom(room) {
+        let key = database.ref(databaseRoot + room + '/_join_').push({ joined : 'unknown'}).key
+        clientId = 'member_' + key;
+        console.log('joined to room=' + room + ' as clientId=' + clientId);
+        database.ref(databaseRoot + room + '/_join_/' + key).update({ joined : clientId});
+
+        roomBroadcastRef = database.ref(databaseRoot + room + '/_join_/');
+        roomBroadcastRef.on('child_added', function(data) {
+            console.log('roomBroadcastRef.on(data) data.key=' + data.key + ', data.val():', data.val());
+            if (data.key === key) {
+                // ignore self message
+                return;
+            }
+
+            if (isConnectedWith(data.key)) {
+                // already connnected, so skip
+                console.log('already connected, so ignore');
+            } else {
+                makeOffer(data.key);
+            }
+        });
+    }
+
+    function isConnectedWith(id) {
+        return peerConnections[id] ? true : false;
+    }
+
+    function makeOffer(fromId) {
+        peer = new Peer({key: myPeerAPIKey});
+        dataConnection = peer.connect(fromId);
+        dataConnection = dataConnectionEvent(dataConnection);
+        peerConnections[fromId] = dataConnection;
+        
+    }
+
     // Room owner connection get
     peer.on('connection', function(dataConnection) {
 
@@ -187,6 +235,7 @@ $(function(){
                     console.log('converted msg', textVal);
                     dataConnection.send(textVal);
                     chat.append(convertHtml(textVal, 'self'));
+                    // chat.height($(document).height() * 0.7);
                     chat.animate({scrollTop: chat.prop("scrollHeight")}, 500); // scroll to bottom
                     $(".textarea").val("").focus();
                 }
