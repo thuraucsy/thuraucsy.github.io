@@ -32,7 +32,8 @@ $(function(){
         roomBroadcastRef.on('child_added', function(data) {
             console.log('roomBroadcastRef.on(data) data.key=' + data.key + ', data.val():', data.val());
             if (data.key === key) {
-                // ignore self message
+                console.log("ignore self and create peer");
+                peer = new Peer(data.key, {key: myPeerAPIKey});
                 return;
             }
 
@@ -51,6 +52,7 @@ $(function(){
 
     function makeOffer(fromId) {
         peer = new Peer({key: myPeerAPIKey});
+        console.log("connect to ", fromId);
         dataConnection = peer.connect(fromId);
         dataConnection = dataConnectionEvent(dataConnection);
         peerConnections[fromId] = dataConnection;
@@ -80,15 +82,15 @@ $(function(){
 				if (window.history.state === 'owner') {
 					console.log('owner refreshing');
                     // create peer as room owner
-					peer = new Peer(room, {key: myPeerAPIKey});
+					// peer = new Peer(room, {key: myPeerAPIKey});
 				} else {
 					console.log('joiner refreshing');
 					// create peer as room joiner
-					peer = new Peer({key: myPeerAPIKey});
-					// call to room owner
-					dataConnection = peer.connect(room);
-                    // room joiner connection get
-					dataConnection = dataConnectionEvent(dataConnection);
+					// peer = new Peer({key: myPeerAPIKey});
+					// // call to room owner
+					// dataConnection = peer.connect(room);
+                    // // room joiner connection get
+					// dataConnection = dataConnectionEvent(dataConnection);
 				}
 				
 				return room;
@@ -98,7 +100,7 @@ $(function(){
 		// generate random room, and replace URL
 		let room = 'room_' + getUniqueStr();
 		// create peer as room owner
-		peer = new Peer(room, {key: myPeerAPIKey});
+		// peer = new Peer(room, {key: myPeerAPIKey});
 		window.history.pushState('owner', null, 'index.html?' + room);
 		return room;
 	}
