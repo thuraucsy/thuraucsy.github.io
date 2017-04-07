@@ -324,7 +324,7 @@
   function startVideo() {
     getDeviceStream({video: true, audio: true}) // audio: false <-- ontrack once, audio:true --> ontrack twice!!
     .then(function (stream) { // success
-      //localStream = stream;
+      localStream = stream;
       playVideo(localVideo, stream);
     }).catch(function (error) { // error
       console.error('getUserMedia error:', error);
