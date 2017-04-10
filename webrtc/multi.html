@@ -440,6 +440,7 @@
     let peer = new RTCPeerConnection(pc_config);
     // --- on get remote stream ---
     console.log('ontrack in peer');
+    console.log(peer);
     if ('ontrack' in peer) {
       peer.ontrack = function(event) {
         let stream = event.streams[0];
