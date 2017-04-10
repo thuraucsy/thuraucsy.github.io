@@ -192,7 +192,7 @@
 
   function prepareOffer(sdp) {
     sdp.sdp = setMediaDirection(sdp.sdp, ['sendrecv', 'inactive']);
-    return sdp;
+    return sdp.sdp;
   };
 
   function setMediaDirection(sdp, mediaDirection) {
