@@ -440,30 +440,31 @@
     let peer = new RTCPeerConnection(pc_config);
     // --- on get remote stream ---
     console.log(peer);
-    if ('ontrack' in peer) {
-      console.log('ontrack in peer');
-      peer.ontrack = function(event) {
-        console.log('event is running');
-        let stream = event.streams[0];
-        console.log('-- peer.ontrack() stream.id=' + stream.id);
-        if (isRemoteVideoAttached(id)) {
-          console.log('stream already attached, so ignore');
-        }
-        else {
-          //playVideo(remoteVideo, stream);
-          attachVideo(id, stream);
-        }
-      };
-    }
-    else {
+    // if ('ontrack' in peer) {
+    //   console.log('ontrack in peer');
+    //   peer.ontrack = function(event) {
+    //     console.log('event is running');
+    //     let stream = event.streams[0];
+    //     console.log('-- peer.ontrack() stream.id=' + stream.id);
+    //     if (isRemoteVideoAttached(id)) {
+    //       console.log('stream already attached, so ignore');
+    //     }
+    //     else {
+    //       //playVideo(remoteVideo, stream);
+    //       attachVideo(id, stream);
+    //     }
+    //   };
+    // }
+    // else {
       console.log('onaddstream in peer');
       peer.onaddstream = function(event) {
+        console.log('event is running');
         let stream = event.stream;
         console.log('-- peer.onaddstream() stream.id=' + stream.id);
         //playVideo(remoteVideo, stream);
         attachVideo(id, stream);
       };
-    }
+    // }
     // --- on get local ICE candidate
     peer.onicecandidate = function (evt) {
       if (evt.candidate) {
