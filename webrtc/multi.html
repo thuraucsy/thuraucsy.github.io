@@ -439,10 +439,11 @@
   ]};
     let peer = new RTCPeerConnection(pc_config);
     // --- on get remote stream ---
-    console.log('ontrack in peer');
     console.log(peer);
     if ('ontrack' in peer) {
+      console.log('ontrack in peer');
       peer.ontrack = function(event) {
+        console.log('event is running');
         let stream = event.streams[0];
         console.log('-- peer.ontrack() stream.id=' + stream.id);
         if (isRemoteVideoAttached(id)) {
