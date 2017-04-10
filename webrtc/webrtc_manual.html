@@ -186,10 +186,31 @@
     
     return peer;
   }
+
+  function prepareOffer(sdp) {
+    sdp.sdp = setMediaDirection(sdp.sdp, ['sendrecv', 'inactive']);
+    setLocalAndSendMessage(sdp);
+  };
+
+  function setMediaDirection(sdp, mediaDirection) {
+    var sdpLines = sdp.split('\r\n');
+    var mLineIndex = 0;
+    for (var i = 0; i < sdpLines.length; i++) {
+      if (sdpLines[i].indexOf('a=sendrecv') !== -1) {
+        sdpLines[i] = 'a=' + mediaDirection[mLineIndex];
+        if (mLineIndex == 1) {
+          break;
+        }
+        mLineIndex++;
+      }
+    }
+    sdp = sdpLines.join('\r\n');
+    return sdp;
+  }
   
   function makeOffer() {
     peerConnection = prepareNewConnection();
-    peerConnection.createOffer()
+    peerConnection.createOffer(prepareOffer)
     .then(function (sessionDescription) {
       console.log('createOffer() succsess in promise');
       return peerConnection.setLocalDescription(sessionDescription);
