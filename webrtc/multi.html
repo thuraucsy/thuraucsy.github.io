@@ -433,10 +433,20 @@
   // ---------------------- connection handling -----------------------
   function prepareNewConnection(id) {
     let pc_config = {"iceServers":[
-    {"urls": "stun:turnsv1.itj.jp:80"},
-    {"urls":"turn:turnsv1.itj.jp:80?transport=udp", "username":"user", "credential":"password"},
-    {"urls":"turn:turnsv1.itj.jp:80?transport=tcp", "username":"user", "credential":"password"}
-  ]};
+      {"urls": "stun:turnsv1.itj.jp:80"},
+      {"urls":"turn:turnsv1.itj.jp:80?transport=udp", "username":"user", "credential":"password"},
+      {"urls":"turn:turnsv1.itj.jp:80?transport=tcp", "username":"user", "credential":"password"}
+    ]};
+
+    // -- add local stream --
+    if (localStream) {
+      console.log('Adding local stream...');
+      peer.addStream(localStream);
+    }
+    else {
+      console.warn('no local stream, but continue.');
+    }
+    
     let peer = new RTCPeerConnection(pc_config);
     // --- on get remote stream ---
     console.log(peer);
@@ -514,14 +524,7 @@
     };
     
     
-    // -- add local stream --
-    if (localStream) {
-      console.log('Adding local stream...');
-      peer.addStream(localStream);
-    }
-    else {
-      console.warn('no local stream, but continue.');
-    }
+    
     return peer;
   }
   function makeOffer(id) {
