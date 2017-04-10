@@ -30,6 +30,9 @@
   let peerConnection = null;
   let textForSendSdp = document.getElementById('text_for_send_sdp');
   let textToReceiveSdp = document.getElementById('text_for_receive_sdp');
+  var sdpConstraints = {'mandatory': {
+                      'OfferToReceiveAudio': true,
+                      'OfferToReceiveVideo': true }};
   
   // --- prefix -----
   navigator.getUserMedia  = navigator.getUserMedia    || navigator.webkitGetUserMedia ||
@@ -189,7 +192,7 @@
 
   function prepareOffer(sdp) {
     sdp.sdp = setMediaDirection(sdp.sdp, ['sendrecv', 'inactive']);
-    setLocalAndSendMessage(sdp);
+    return sdp;
   };
 
   function setMediaDirection(sdp, mediaDirection) {
@@ -207,10 +210,14 @@
     sdp = sdpLines.join('\r\n');
     return sdp;
   }
+
+  function onCreateSessionDescriptionError(error) {
+    console.log('Failed to create session description: ' + error.toString());
+  }
   
   function makeOffer() {
     peerConnection = prepareNewConnection();
-    peerConnection.createOffer(prepareOffer)
+    peerConnection.createOffer(prepareOffer, onCreateSessionDescriptionError, sdpConstraints)
     .then(function (sessionDescription) {
       console.log('createOffer() succsess in promise');
       return peerConnection.setLocalDescription(sessionDescription);
