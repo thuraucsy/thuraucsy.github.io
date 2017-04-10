@@ -437,6 +437,8 @@
       {"urls":"turn:turnsv1.itj.jp:80?transport=udp", "username":"user", "credential":"password"},
       {"urls":"turn:turnsv1.itj.jp:80?transport=tcp", "username":"user", "credential":"password"}
     ]};
+    
+    let peer = new RTCPeerConnection(pc_config);
 
     // -- add local stream --
     if (localStream) {
@@ -447,7 +449,6 @@
       console.warn('no local stream, but continue.');
     }
     
-    let peer = new RTCPeerConnection(pc_config);
     // --- on get remote stream ---
     console.log(peer);
     // if ('ontrack' in peer) {
