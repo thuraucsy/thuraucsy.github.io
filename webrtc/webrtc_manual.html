@@ -190,8 +190,9 @@
   
   function makeOffer() {
     peerConnection = prepareNewConnection();
-    peerConnection.createOffer()
-    .then(function (sessionDescription) {
+    peerConnection.createOffer(function(sdp) {
+      console.log('offer', sdp.sdp); }, function(err) { console.warn(err); }, {mandatory:{offerToReceiveAudio:true, offerToReceiveVideo:false}}
+    ).then(function (sessionDescription) {
       console.log('createOffer() succsess in promise');
       return peerConnection.setLocalDescription(sessionDescription);
     }).then(function() {
