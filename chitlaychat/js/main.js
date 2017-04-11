@@ -18,7 +18,7 @@ $(function(){
     firebase.initializeApp(config);
     let database = firebase.database();
     let roomBroadcastRef;
-    let peerConnections = [];
+    peerConnections = [];
 
     joinRoom(room);
 
