@@ -206,9 +206,10 @@
       // -- Trickle ICE の場合は、初期SDPを相手に送る -- 
       // -- Vanilla ICE の場合には、まだSDPは送らない --
       //sendSdp(peerConnection.localDescription);
-    }).catch(function(err) {
+    }, {mandatory:{OfferToReceiveAudio:true, OfferToReceiveVideo:false}}
+    ).catch(function(err) {
       console.error(err);
-    }, {mandatory:{OfferToReceiveAudio:true, OfferToReceiveVideo:false}});
+    });
   }
   
   function setOffer(sessionDescription) {
