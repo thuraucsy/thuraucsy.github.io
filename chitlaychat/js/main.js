@@ -41,10 +41,16 @@ $(function(){
                 // already connnected, so skip
                 console.log('already connected, so ignore');
             } else if (data.val().joined == 'unknown') {
+		 database.ref(databaseRoot + room + '/_dm_/' + data.key).push(key);
 		  console.log('new peer joined');
                 //makeOffer(data.key);
             }
         });
+	    
+	dmRef = database.ref(databaseRoot + room + '/_dm_/' + key);
+	dmRef.on('child_added', function(data) {
+		console.log('Child added on dm', data);
+	});
     }
 
     function isConnectedWith(id) {
