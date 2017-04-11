@@ -197,7 +197,7 @@
   
   function makeOffer() {
     peerConnection = prepareNewConnection();
-    peerConnection.createOffer({mandatory:{OfferToReceiveAudio:true, OfferToReceiveVideo:false}})
+    peerConnection.createOffer()
     .then(function (sessionDescription) {
       console.log(sessionDescription);
       return peerConnection.setLocalDescription(sessionDescription);
@@ -208,7 +208,7 @@
       //sendSdp(peerConnection.localDescription);
     }).catch(function(err) {
       console.error(err);
-    });
+    },{offerToReceiveAudio:true, offerToReceiveVideo:false});
   }
   
   function setOffer(sessionDescription) {
