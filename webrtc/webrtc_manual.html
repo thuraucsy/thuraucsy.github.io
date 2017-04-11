@@ -190,9 +190,8 @@
   
   function makeOffer() {
     peerConnection = prepareNewConnection();
-    peerConnection.createOffer(function(sdp) {
-      console.log('offer', sdp.sdp); }, function(err) { console.warn(err); }, {mandatory:{OfferToReceiveAudio:true, OfferToReceiveVideo:false}}
-    ).then(function (sessionDescription) {
+    peerConnection.createOffer()
+    .then(function (sessionDescription) {
       console.log(sessionDescription);
       console.log('createOffer() succsess in promise');
       return peerConnection.setLocalDescription(sessionDescription);
@@ -204,7 +203,7 @@
       //sendSdp(peerConnection.localDescription);
     }).catch(function(err) {
       console.error(err);
-    });
+    }, {mandatory:{OfferToReceiveAudio:true, OfferToReceiveVideo:false}});
   }
   
   function setOffer(sessionDescription) {
