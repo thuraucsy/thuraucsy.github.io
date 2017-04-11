@@ -197,7 +197,7 @@
   
   function makeOffer() {
     peerConnection = prepareNewConnection();
-    peerConnection.createOffer({offerToReceiveAudio:true, offerToReceiveVideo:false})
+    peerConnection.createOffer({mandatory:{OfferToReceiveAudio:true, OfferToReceiveVideo:false}})
     .then(function (sessionDescription) {
       console.log(sessionDescription);
       return peerConnection.setLocalDescription(sessionDescription);
