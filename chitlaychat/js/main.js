@@ -40,7 +40,7 @@ $(function(){
             if (isConnectedWith(data.key)) {
                 // already connnected, so skip
                 console.log('already connected, so ignore');
-            } else if (data.val() == 'unknown') {
+            } else if (data.val().joined == 'unknown') {
 		  console.log('new peer joined');
                 //makeOffer(data.key);
             }
