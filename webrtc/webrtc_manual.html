@@ -197,18 +197,34 @@
   
   function makeOffer() {
     peerConnection = prepareNewConnection();
-    peerConnection.createOffer({mandatory:{OfferToReceiveAudio:true, OfferToReceiveVideo:false}})
-    .then(function (sessionDescription) {
-      console.log(sessionDescription);
-      return peerConnection.setLocalDescription(sessionDescription);
-    }).then(function() {
+    peerConnection.createOffer(
+        function(sdp) {
+          console.log('offer', sdp.sdp); 
+          console.log('setLocalDescription() succsess in promise');
+          console.log('createOffer() succsess in promise');
+          return peerConnection.setLocalDescription(sdp);
+
+          //   // -- Trickle ICE の場合は、初期SDPを相手に送る -- 
+          //   // -- Vanilla ICE の場合には、まだSDPは送らない --
+          //   //sendSdp(peerConnection.localDescription);
+        }, 
+        function(err) { 
+          console.warn(err); 
+        }, 
+        {mandatory:{OfferToReceiveAudio:true, OfferToReceiveVideo:false}}
+    );
+
+    // .then(function (sessionDescription) {
+    //   console.log(sessionDescription);
+    //   return peerConnection.setLocalDescription(sessionDescription);
+    // }).then(function() {
       
-      // -- Trickle ICE の場合は、初期SDPを相手に送る -- 
-      // -- Vanilla ICE の場合には、まだSDPは送らない --
-      //sendSdp(peerConnection.localDescription);
-    }).catch(function(err) {
-      console.error(err);
-    });
+    //   // -- Trickle ICE の場合は、初期SDPを相手に送る -- 
+    //   // -- Vanilla ICE の場合には、まだSDPは送らない --
+    //   //sendSdp(peerConnection.localDescription);
+    // }).catch(function(err) {
+    //   console.error(err);
+    // });
   }
   
   function setOffer(sessionDescription) {
