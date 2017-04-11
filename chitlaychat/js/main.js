@@ -40,8 +40,9 @@ $(function(){
             if (isConnectedWith(data.key)) {
                 // already connnected, so skip
                 console.log('already connected, so ignore');
-            } else {
-                makeOffer(data.key);
+            } else if (data.val() == 'unknown') {
+		  console.log('new peer joined');
+                //makeOffer(data.key);
             }
         });
     }
