@@ -3,6 +3,7 @@
 <head>
  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
  <title>Hand Signaling</title>
+ <!-- <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script> -->
 </head>
 <body>
   Hand Signaling 2016<br />
@@ -40,7 +41,7 @@
   // ---------------------- media handling ----------------------- 
   // start local video
   function startVideo() {
-    getDeviceStream({video: true, audio: false})
+    getDeviceStream({video: true, audio: true})
     .then(function (stream) { // success
       localStream = stream;
       playVideo(localVideo, stream);
@@ -148,6 +149,7 @@
         console.log('-- peer.ontrack()');
         let stream = event.streams[0];
         playVideo(remoteVideo, stream);
+        getStats(peer);
       };
     }
     else {
@@ -155,6 +157,7 @@
         console.log('-- peer.onaddstream()');
         let stream = event.stream;
         playVideo(remoteVideo, stream);
+        getStats(peer);
       };
     }
     
@@ -186,22 +189,44 @@
     
     return peer;
   }
+
+   //   function(sdp) {
+      //   console.log('offer', sdp.sdp); 
+      //   console.log('setLocalDescription() succsess in promise');
+      //   console.log('createOffer() succsess in promise');
+      //   return peerConnection.setLocalDescription(sdp);
+      // }, function(err) { console.warn(err); }, {mandatory:{OfferToReceiveAudio:true, OfferToReceiveVideo:false}}
   
   function makeOffer() {
     peerConnection = prepareNewConnection();
-    peerConnection.createOffer()
-    .then(function (sessionDescription) {
-      console.log('createOffer() succsess in promise');
-      return peerConnection.setLocalDescription(sessionDescription);
-    }).then(function() {
-      console.log('setLocalDescription() succsess in promise');
+    peerConnection.createOffer(
+        function(sdp) {
+          console.log('offer', sdp.sdp); 
+          console.log('setLocalDescription() succsess in promise');
+          console.log('createOffer() succsess in promise');
+          return peerConnection.setLocalDescription(sdp);
+
+          //   // -- Trickle ICE の場合は、初期SDPを相手に送る -- 
+          //   // -- Vanilla ICE の場合には、まだSDPは送らない --
+          //   //sendSdp(peerConnection.localDescription);
+        }, 
+        function(err) { 
+          console.warn(err); 
+        }, 
+        // {mandatory:{OfferToReceiveAudio:true, OfferToReceiveVideo:false}}
+    );
+
+    // .then(function (sessionDescription) {
+    //   console.log(sessionDescription);
+    //   return peerConnection.setLocalDescription(sessionDescription);
+    // }).then(function() {
       
-      // -- Trickle ICE の場合は、初期SDPを相手に送る -- 
-      // -- Vanilla ICE の場合には、まだSDPは送らない --
-      //sendSdp(peerConnection.localDescription);
-    }).catch(function(err) {
-      console.error(err);
-    });
+    //   // -- Trickle ICE の場合は、初期SDPを相手に送る -- 
+    //   // -- Vanilla ICE の場合には、まだSDPは送らない --
+    //   //sendSdp(peerConnection.localDescription);
+    // }).catch(function(err) {
+    //   console.error(err);
+    // });
   }
   
   function setOffer(sessionDescription) {
@@ -277,6 +302,67 @@
       console.warn('peer NOT exist.');
     }
   }
+ 
+ function getStats(peer) {
+    _getStats(peer, function (results) {
+        for (var i = 0; i < results.length; ++i) {
+            var res = results[i];
+            console.log('res.googCodecName', res.googCodecName);
+            console.log(res);
+            // if (res.googCodecName == 'opus') {
+                if (!window.prevBytesSent) 
+                    window.prevBytesSent = res.bytesSent;
+
+                var bytes = res.bytesSent - window.prevBytesSent;
+                window.prevBytesSent = res.bytesSent;
+
+                var kilobytes = bytes / 1024;
+                console.log(kilobytes.toFixed(1) + ' kbits/s');
+            // }
+        }
+
+        setTimeout(function () {
+            console.log('getStats is running every 1 sec');
+            getStats(peer);
+        }, 1000);
+    });
+}
+
+// a wrapper around getStats which hides the differences (where possible)
+// following code-snippet is taken from somewhere on the github
+function _getStats(peer, cb) {
+    console.log('callback get calling');
+    if (!!navigator.mozGetUserMedia) {
+        peer.getStats(
+            function (res) {
+                var items = [];
+                res.forEach(function (result) {
+                    items.push(result);
+                });
+                cb(items);
+            },
+            cb
+        );
+    } else {
+
+        console.log('not moz');
+        peer.getStats(function (res) {
+            var items = [];
+            res.result().forEach(function (result) {
+                var item = {};
+                result.names().forEach(function (name) {
+                    item[name] = result.stat(name);
+                });
+                item.id = result.id;
+                item.type = result.type;
+                item.timestamp = result.timestamp;
+                items.push(item);
+            });
+            cb(items);
+        });
+    }
+};
+
   
 </script>
 </html>

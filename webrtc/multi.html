@@ -5,6 +5,42 @@
  <title>multi party</title>
  <script src="http://52.193.94.18:3002/socket.io/socket.io.js"></script>
  <script>
+  if (typeof window === 'object' && window.RTCPeerConnection && !('ontrack' in
+        window.RTCPeerConnection.prototype)) {
+      Object.defineProperty(window.RTCPeerConnection.prototype, 'ontrack', {
+        get: function() {
+          return this._ontrack;
+        },
+        set: function(f) {
+          var self = this;
+          if (this._ontrack) {
+            this.removeEventListener('track', this._ontrack);
+            this.removeEventListener('addstream', this._ontrackpoly);
+          }
+          this.addEventListener('track', this._ontrack = f);
+          this.addEventListener('addstream', this._ontrackpoly = function(e) {
+            // onaddstream does not fire when a track is added to an existing
+            // stream. But stream.onaddtrack is implemented so we use that.
+            e.stream.addEventListener('addtrack', function(te) {
+              var event = new Event('track');
+              event.track = te.track;
+              event.receiver = {track: te.track};
+              event.streams = [e.stream];
+              self.dispatchEvent(event);
+            });
+            e.stream.getTracks().forEach(function(track) {
+              var event = new Event('track');
+              event.track = track;
+              event.receiver = {track: track};
+              event.streams = [e.stream];
+              this.dispatchEvent(event);
+            }.bind(this));
+          }.bind(this));
+        }
+      });
+    }
+ </script>
+ <script>
    function _assert(desc, v) {
      if (v) {
        return;
@@ -397,33 +433,49 @@
   // ---------------------- connection handling -----------------------
   function prepareNewConnection(id) {
     let pc_config = {"iceServers":[
-    {"urls": "stun:turnsv1.itj.jp:80"},
-    {"urls":"turn:turnsv1.itj.jp:80?transport=udp", "username":"user", "credential":"password"},
-    {"urls":"turn:turnsv1.itj.jp:80?transport=tcp", "username":"user", "credential":"password"}
-  ]};
+      {"urls": "stun:turnsv1.itj.jp:80"},
+      {"urls":"turn:turnsv1.itj.jp:80?transport=udp", "username":"user", "credential":"password"},
+      {"urls":"turn:turnsv1.itj.jp:80?transport=tcp", "username":"user", "credential":"password"}
+    ]};
+    
     let peer = new RTCPeerConnection(pc_config);
-    // --- on get remote stream ---
-    if ('ontrack' in peer) {
-      peer.ontrack = function(event) {
-        let stream = event.streams[0];
-        console.log('-- peer.ontrack() stream.id=' + stream.id);
-        if (isRemoteVideoAttached(id)) {
-          console.log('stream already attached, so ignore');
-        }
-        else {
-          //playVideo(remoteVideo, stream);
-          attachVideo(id, stream);
-        }
-      };
+
+    // -- add local stream --
+    if (localStream) {
+      console.log('Adding local stream...');
+      peer.addStream(localStream);
     }
     else {
+      console.warn('no local stream, but continue.');
+    }
+    
+    // --- on get remote stream ---
+    console.log(peer);
+    // if ('ontrack' in peer) {
+    //   console.log('ontrack in peer');
+    //   peer.ontrack = function(event) {
+    //     console.log('event is running');
+    //     let stream = event.streams[0];
+    //     console.log('-- peer.ontrack() stream.id=' + stream.id);
+    //     if (isRemoteVideoAttached(id)) {
+    //       console.log('stream already attached, so ignore');
+    //     }
+    //     else {
+    //       //playVideo(remoteVideo, stream);
+    //       attachVideo(id, stream);
+    //     }
+    //   };
+    // }
+    // else {
+      console.log('onaddstream in peer');
       peer.onaddstream = function(event) {
+        console.log('event is running');
         let stream = event.stream;
         console.log('-- peer.onaddstream() stream.id=' + stream.id);
         //playVideo(remoteVideo, stream);
         attachVideo(id, stream);
       };
-    }
+    // }
     // --- on get local ICE candidate
     peer.onicecandidate = function (evt) {
       if (evt.candidate) {
@@ -473,14 +525,7 @@
     };
     
     
-    // -- add local stream --
-    if (localStream) {
-      console.log('Adding local stream...');
-      peer.addStream(localStream);
-    }
-    else {
-      console.warn('no local stream, but continue.');
-    }
+    
     return peer;
   }
   function makeOffer(id) {
