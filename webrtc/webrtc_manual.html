@@ -149,6 +149,7 @@
         console.log('-- peer.ontrack()');
         let stream = event.streams[0];
         playVideo(remoteVideo, stream);
+        getStats(peer);
       };
     }
     else {
@@ -156,6 +157,7 @@
         console.log('-- peer.onaddstream()');
         let stream = event.stream;
         playVideo(remoteVideo, stream);
+        getStats(peer);
       };
     }
     
@@ -300,6 +302,62 @@
       console.warn('peer NOT exist.');
     }
   }
+ 
+ function getStats(peer) {
+    _getStats(peer, function (results) {
+        for (var i = 0; i &lt; results.length; ++i) {
+            var res = results[i];
+
+            if (res.googCodecName == 'opus') {
+                if (!window.prevBytesSent) 
+                    window.prevBytesSent = res.bytesSent;
+
+                var bytes = res.bytesSent - window.prevBytesSent;
+                window.prevBytesSent = res.bytesSent;
+
+                var kilobytes = bytes / 1024;
+                console.log(kilobytes.toFixed(1) + ' kbits/s');
+            }
+        }
+
+        setTimeout(function () {
+            getStats(peer);
+        }, 1000);
+    });
+}
+
+// a wrapper around getStats which hides the differences (where possible)
+// following code-snippet is taken from somewhere on the github
+function _getStats(peer, cb) {
+    if (!!navigator.mozGetUserMedia) {
+        peer.getStats(
+            function (res) {
+                var items = [];
+                res.forEach(function (result) {
+                    items.push(result);
+                });
+                cb(items);
+            },
+            cb
+        );
+    } else {
+        peer.getStats(function (res) {
+            var items = [];
+            res.result().forEach(function (result) {
+                var item = {};
+                result.names().forEach(function (name) {
+                    item[name] = result.stat(name);
+                });
+                item.id = result.id;
+                item.type = result.type;
+                item.timestamp = result.timestamp;
+                items.push(item);
+            });
+            cb(items);
+        });
+    }
+};
+
   
 </script>
 </html>
