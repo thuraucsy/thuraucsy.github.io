@@ -308,7 +308,8 @@
         for (var i = 0; i < results.length; ++i) {
             var res = results[i];
             console.log('res.googCodecName', res.googCodecName);
-            if (res.googCodecName == 'opus') {
+            console.log(res);
+            // if (res.googCodecName == 'opus') {
                 if (!window.prevBytesSent) 
                     window.prevBytesSent = res.bytesSent;
 
@@ -317,7 +318,7 @@
 
                 var kilobytes = bytes / 1024;
                 console.log(kilobytes.toFixed(1) + ' kbits/s');
-            }
+            // }
         }
 
         setTimeout(function () {
