@@ -50,6 +50,7 @@ $(function(){
         dmRef = database.ref(databaseRoot + room + '/_dm_/' + key);
         dmRef.on('child_added', function(data) {
             console.log('Child added on dm', data, data.key, data.val());
+            makeOffer(data.val());
         });
     }
 
