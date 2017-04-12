@@ -213,7 +213,7 @@
         function(err) { 
           console.warn(err); 
         }, 
-        {mandatory:{OfferToReceiveAudio:true, OfferToReceiveVideo:false}}
+        // {mandatory:{OfferToReceiveAudio:true, OfferToReceiveVideo:false}}
     );
 
     // .then(function (sessionDescription) {
@@ -321,6 +321,7 @@
         }
 
         setTimeout(function () {
+            console.log('getStats is running every 1 sec');
             getStats(peer);
         }, 1000);
     });
