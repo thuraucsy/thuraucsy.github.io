@@ -307,7 +307,7 @@
     _getStats(peer, function (results) {
         for (var i = 0; i < results.length; ++i) {
             var res = results[i];
-
+            console.log('res.googCodecName', res.googCodecName);
             if (res.googCodecName == 'opus') {
                 if (!window.prevBytesSent) 
                     window.prevBytesSent = res.bytesSent;
@@ -330,6 +330,7 @@
 // a wrapper around getStats which hides the differences (where possible)
 // following code-snippet is taken from somewhere on the github
 function _getStats(peer, cb) {
+    console.log('callback get calling');
     if (!!navigator.mozGetUserMedia) {
         peer.getStats(
             function (res) {
@@ -342,6 +343,8 @@ function _getStats(peer, cb) {
             cb
         );
     } else {
+
+        console.log('not moz');
         peer.getStats(function (res) {
             var items = [];
             res.result().forEach(function (result) {
