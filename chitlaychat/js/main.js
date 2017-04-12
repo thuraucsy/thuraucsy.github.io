@@ -41,7 +41,7 @@ $(function(){
                 // already connnected, so skip
                 console.log('already connected, so ignore');
             } else if (data.val().joined == 'unknown') {
-		        database.ref(databaseRoot + room + '/_dm_/' + data.key).push({ callme : key });
+		        database.ref(databaseRoot + room + '/_dm_/' + data.key).update({ callme : key });
 		        console.log('new peer joined');
                 //makeOffer(data.key);
             }
