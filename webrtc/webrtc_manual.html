@@ -141,7 +141,7 @@
   // ---------------------- connection handling -----------------------
   function prepareNewConnection() {
     let pc_config = {"iceServers":[]};
-    let peer = new RTCPeerConnection(pc_config);
+    peer = new RTCPeerConnection(pc_config);
     
     // --- on get remote stream ---
     if ('ontrack' in peer) {
@@ -321,10 +321,10 @@
             // }
         }
 
-        setTimeout(function () {
-            console.log('getStats is running every 1 sec');
-            getStats(peer);
-        }, 1000);
+//         setTimeout(function () {
+//             console.log('getStats is running every 1 sec');
+//             getStats(peer);
+//         }, 1000);
     });
 }
 
