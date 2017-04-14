@@ -81,10 +81,10 @@ function getMedia() {
     }
   }
     
- navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function(stream) {
-     console.log(stream);
-     gStream = stream;
- });
+ // navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function(stream) {
+ //     console.log(stream);
+ //     gStream = stream;
+ // });
 
   navigator.mediaDevices.getUserMedia(getUserMediaConstraints())
   .then(gotStream)
@@ -107,31 +107,32 @@ function gotStream(stream) {
 function getUserMediaConstraints() {
   var constraints = {};
   constraints.audio = true;
-  constraints.video = {};
-  if (minWidthInput.value !== '0') {
-    constraints.video.width = {};
-    constraints.video.width.min = minWidthInput.value;
-  }
-  if (maxWidthInput.value !== '0') {
-    constraints.video.width = constraints.video.width || {};
-    constraints.video.width.max = maxWidthInput.value;
-  }
-  if (minHeightInput.value !== '0') {
-    constraints.video.height = {};
-    constraints.video.height.min = minHeightInput.value;
-  }
-  if (maxHeightInput.value !== '0') {
-    constraints.video.height = constraints.video.height || {};
-    constraints.video.height.max = maxHeightInput.value;
-  }
-  if (minFramerateInput.value !== '0') {
-    constraints.video.frameRate = {};
-    constraints.video.frameRate.min = minFramerateInput.value;
-  }
-  if (maxFramerateInput.value !== '0') {
-    constraints.video.frameRate = constraints.video.frameRate || {};
-    constraints.video.frameRate.max = maxFramerateInput.value;
-  }
+  constraints.video = true;
+  // constraints.video = {};
+  // if (minWidthInput.value !== '0') {
+  //   constraints.video.width = {};
+  //   constraints.video.width.min = minWidthInput.value;
+  // }
+  // if (maxWidthInput.value !== '0') {
+  //   constraints.video.width = constraints.video.width || {};
+  //   constraints.video.width.max = maxWidthInput.value;
+  // }
+  // if (minHeightInput.value !== '0') {
+  //   constraints.video.height = {};
+  //   constraints.video.height.min = minHeightInput.value;
+  // }
+  // if (maxHeightInput.value !== '0') {
+  //   constraints.video.height = constraints.video.height || {};
+  //   constraints.video.height.max = maxHeightInput.value;
+  // }
+  // if (minFramerateInput.value !== '0') {
+  //   constraints.video.frameRate = {};
+  //   constraints.video.frameRate.min = minFramerateInput.value;
+  // }
+  // if (maxFramerateInput.value !== '0') {
+  //   constraints.video.frameRate = constraints.video.frameRate || {};
+  //   constraints.video.frameRate.max = maxFramerateInput.value;
+  // }
     
    console.log("constraints", constraints);
 
