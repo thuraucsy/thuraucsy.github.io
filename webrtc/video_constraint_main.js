@@ -101,7 +101,7 @@ function getMedia() {
     console.info(id);
     navigator.mediaDevices.getUserMedia({
       video: {optional: [{sourceId: id}]},
-      audio: true})
+      audio: false})
     .then(gotStream)
     .catch(function(e) {
       var message = 'getUserMedia error: ' + e.name + '\n' +
