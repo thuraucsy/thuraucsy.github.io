@@ -78,6 +78,12 @@ function getMedia() {
       videoTracks[i].stop();
     }
   }
+    
+  var gStream;
+ navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function(stream) {
+     gStream = stream;
+ });
+
   navigator.mediaDevices.getUserMedia(getUserMediaConstraints())
   .then(gotStream)
   .catch(function(e) {
