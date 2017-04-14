@@ -87,13 +87,14 @@ function getMedia() {
   }
   navigator.mediaDevices.enumerateDevices().then(function(devices) {
     for (var i = 0; i < devices.length; i++) {
+    console.log("devices[i].label", devices[i].label);
       if (devices[i].kind === 'videoinput') {
         deviceList[i] = devices[i];
         requestVideo_(deviceList[i].deviceId, devices[i].label);
       }
     }
   }).catch(function(err) {
-    log(err.name + ": " + err.message);
+    console.log(err.name + ": " + err.message);
   });
 
   function requestVideo_(id, label) {
