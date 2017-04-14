@@ -81,20 +81,35 @@ function getMedia() {
     }
   }
     
- // navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function(stream) {
- //     console.log(stream);
- //     gStream = stream;
- // });
-
-  navigator.mediaDevices.getUserMedia(getUserMediaConstraints())
-  .then(gotStream)
-  .catch(function(e) {
-    var message = 'getUserMedia error: ' + e.name + '\n' +
-        'PermissionDeniedError may mean invalid constraints.';
-    alert(message);
-    console.log(message);
-    getMediaButton.disabled = false;
+ if (typeof navigator.mediaDevices.enumerateDevices === 'undefined') {
+    alert('Your browser does not support navigator.mediaDevices.enumerateDevices, aborting.');
+    return;
+  }
+  navigator.mediaDevices.enumerateDevices().then(function(devices) {
+    for (var i = 0; i < devices.length; i++) {
+    log("devices[i].label", devices[i].label);
+      if (devices[i].kind === 'videoinput') {
+        deviceList[i] = devices[i];
+        requestVideo_(deviceList[i].deviceId, devices[i].label);
+      }
+    }
+  }).catch(function(err) {
+    log(err.name + ": " + err.message);
   });
+
+  function requestVideo_(id, label) {
+    navigator.mediaDevices.getUserMedia(getUserMediaConstraints(id, label))
+    .then(gotStream)
+    .catch(function(e) {
+      var message = 'getUserMedia error: ' + e.name + '\n' +
+          'PermissionDeniedError may mean invalid constraints.';
+      alert(message);
+      console.log(message);
+      getMediaButton.disabled = false;
+    });
+  }
+
+  
 }
 
 function gotStream(stream) {
@@ -104,10 +119,10 @@ function gotStream(stream) {
   localVideo.srcObject = stream;
 }
 
-function getUserMediaConstraints() {
+function getUserMediaConstraints(id, label) {
   var constraints = {};
   constraints.audio = true;
-  constraints.video = true;
+  constraints.video = {optional: [{sourceId: id}]};
   // constraints.video = {};
   // if (minWidthInput.value !== '0') {
   //   constraints.video.width = {};
