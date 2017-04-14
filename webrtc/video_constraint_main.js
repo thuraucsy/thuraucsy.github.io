@@ -44,6 +44,8 @@ var remotePeerConnection;
 var localStream;
 var bytesPrev;
 var timestampPrev;
+var gStream;
+
 
 main();
 
@@ -79,8 +81,8 @@ function getMedia() {
     }
   }
     
-  var gStream;
  navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function(stream) {
+     console.log(stream);
      gStream = stream;
  });
 
