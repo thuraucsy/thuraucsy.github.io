@@ -124,6 +124,8 @@ function getUserMediaConstraints() {
     constraints.video.frameRate = constraints.video.frameRate || {};
     constraints.video.frameRate.max = maxFramerateInput.value;
   }
+    
+   console.log("constraints", constraints);
 
   return constraints;
 }
