@@ -89,6 +89,7 @@ function getMedia() {
     for (var i = 0; i < devices.length; i++) {
     console.log("devices[i].label", devices[i].label);
       if (devices[i].kind === 'videoinput') {
+        console.info(devices[i]);
         requestVideo_(devices[i].deviceId, devices[i].label);
       }
     }
@@ -97,9 +98,10 @@ function getMedia() {
   });
 
   function requestVideo_(id, label) {
+    console.info(id);
     navigator.mediaDevices.getUserMedia({
-    video: {optional: [{sourceId: id}]},
-    audio: true})
+      video: {optional: [{sourceId: id}]},
+      audio: true})
     .then(gotStream)
     .catch(function(e) {
       var message = 'getUserMedia error: ' + e.name + '\n' +
