@@ -99,9 +99,7 @@ function getMedia() {
 
   function requestVideo_(id, label) {
     console.info(id);
-    navigator.mediaDevices.getUserMedia({
-      video: {optional: [{sourceId: id}]},
-      audio: false})
+    navigator.mediaDevices.getUserMedia(getUserMediaConstraints(id, label))
     .then(gotStream)
     .catch(function(e) {
       var message = 'getUserMedia error: ' + e.name + '\n' +
@@ -124,33 +122,33 @@ function gotStream(stream) {
 
 function getUserMediaConstraints(id, label) {
   var constraints = {};
-  constraints.audio = true;
-  constraints.video = {optional: [{sourceId: id}]};
-  // constraints.video = {};
-  // if (minWidthInput.value !== '0') {
-  //   constraints.video.width = {};
-  //   constraints.video.width.min = minWidthInput.value;
-  // }
-  // if (maxWidthInput.value !== '0') {
-  //   constraints.video.width = constraints.video.width || {};
-  //   constraints.video.width.max = maxWidthInput.value;
-  // }
-  // if (minHeightInput.value !== '0') {
-  //   constraints.video.height = {};
-  //   constraints.video.height.min = minHeightInput.value;
-  // }
-  // if (maxHeightInput.value !== '0') {
-  //   constraints.video.height = constraints.video.height || {};
-  //   constraints.video.height.max = maxHeightInput.value;
-  // }
-  // if (minFramerateInput.value !== '0') {
-  //   constraints.video.frameRate = {};
-  //   constraints.video.frameRate.min = minFramerateInput.value;
-  // }
-  // if (maxFramerateInput.value !== '0') {
-  //   constraints.video.frameRate = constraints.video.frameRate || {};
-  //   constraints.video.frameRate.max = maxFramerateInput.value;
-  // }
+  constraints.audio = false;
+  // constraints.video = {optional: [{sourceId: id}]};
+  constraints.video = {};
+  if (minWidthInput.value !== '0') {
+    constraints.video.width = {};
+    constraints.video.width.min = minWidthInput.value;
+  }
+  if (maxWidthInput.value !== '0') {
+    constraints.video.width = constraints.video.width || {};
+    constraints.video.width.max = maxWidthInput.value;
+  }
+  if (minHeightInput.value !== '0') {
+    constraints.video.height = {};
+    constraints.video.height.min = minHeightInput.value;
+  }
+  if (maxHeightInput.value !== '0') {
+    constraints.video.height = constraints.video.height || {};
+    constraints.video.height.max = maxHeightInput.value;
+  }
+  if (minFramerateInput.value !== '0') {
+    constraints.video.frameRate = {};
+    constraints.video.frameRate.min = minFramerateInput.value;
+  }
+  if (maxFramerateInput.value !== '0') {
+    constraints.video.frameRate = constraints.video.frameRate || {};
+    constraints.video.frameRate.max = maxFramerateInput.value;
+  }
     
    console.log("constraints", constraints);
 
