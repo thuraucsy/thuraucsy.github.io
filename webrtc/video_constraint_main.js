@@ -97,7 +97,9 @@ function getMedia() {
   });
 
   function requestVideo_(id, label) {
-    navigator.mediaDevices.getUserMedia(getUserMediaConstraints(id, label))
+    navigator.mediaDevices.getUserMedia({
+    video: {optional: [{sourceId: id}]},
+    audio: true})
     .then(gotStream)
     .catch(function(e) {
       var message = 'getUserMedia error: ' + e.name + '\n' +
