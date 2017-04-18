@@ -49,9 +49,11 @@ function getSources_() {
 }
 
 function requestVideo_(id) {
+
+ console.log(id);
+	
   navigator.mediaDevices.getUserMedia({
 	//video: {optional: [{sourceId: id}]},
-	 console.log(id);
 	video: {optional: [{sourceId: id}]},
 	audio: {optional: [{echoCancellation: false}]}
 // 	  audio: false
