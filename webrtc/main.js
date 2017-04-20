@@ -56,7 +56,8 @@ function requestVideo_(id) {
 	//video: {optional: [{sourceId: id}]},
 
 	 video: {
-		optional: [{sourceId: id}],
+		//optional: [{sourceId: id}],
+		deviceId: {exact: id},
 		width: 640,
 		height: 480,
 		frameRate: {
