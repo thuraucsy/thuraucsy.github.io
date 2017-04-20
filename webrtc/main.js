@@ -54,7 +54,16 @@ function requestVideo_(id) {
 	
   navigator.mediaDevices.getUserMedia({
 	//video: {optional: [{sourceId: id}]},
-	video: {optional: [{sourceId: id}]},
+
+	 video: {
+		optional: [{sourceId: id}],
+		width: 640,
+		height: 480,
+		frameRate: {
+			min: 30,
+			max: 50
+		}
+	 },
 	audio: {optional: [{echoCancellation: false}]}
 // 	  audio: false
 
