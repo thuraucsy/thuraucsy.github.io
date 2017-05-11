@@ -22,6 +22,8 @@ $(function(){
 
     joinRoom(room);
 
+    var count = 0;
+
     function joinRoom(room) {
         let key = database.ref(databaseRoot + room + '/_join_').push({ joined : 'unknown'}).key
         clientId = 'member_' + key;
@@ -41,7 +43,10 @@ $(function(){
                 // already connnected, so skip
                 console.log('already connected, so ignore');
             } else if (data.val().joined == 'unknown') {
-		        database.ref(databaseRoot + room + '/_dm_/' + data.key).update({ callme : key });
+                count++;
+                var callKey = key + count;
+                peer = new Peer(callKey, {key: myPeerAPIKey});
+		        database.ref(databaseRoot + room + '/_dm_/' + data.key).update({ callme : callKey });
 		        console.log('new peer joined');
                 //makeOffer(data.key);
             }
