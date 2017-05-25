@@ -65,8 +65,8 @@ function requestVideo_(id) {
 			max: 50
 		}
 	 },
-	audio: {optional: [{echoCancellation: false}]}
-// 	  audio: false
+//	audio: {optional: [{echoCancellation: false}]}
+ 	  audio: false
 
   }
 				    			     
