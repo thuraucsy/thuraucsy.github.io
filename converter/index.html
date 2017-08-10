@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Uni-Zawgyi Converter</title>
+	<style type="text/css">
+        .style3
+        {
+            width: 128px;
+            height: 63px;
+        }
+        .style4
+        {
+            width: 791px;
+            height: 63px;
+        }
+        .style5
+        {
+            height: 63px;
+        }
+        #destfont
+        {
+            width: 145px;
+            height: 34px;
+        }
+        .style9
+        {
+            width: 147px;
+            height: 26px;
+        }
+        .style10
+        {
+            width: 481px;
+            height: 26px;
+        }
+        .style11
+        {
+            height: 26px;
+        }
+        #Select1
+        {
+            width: 141px;
+            margin-left: 0px;
+        }
+        #Submit1
+        {
+            width: 105px;
+        }
+        #TextArea1
+        {
+            height: 555px;
+            width: 803px;
+        }
+        .style12
+        {
+            width: 128px;
+            height: 361px;
+        }
+        .style13
+        {
+            width: 791px;
+            height: 361px;
+        }
+        .style14
+        {
+            height: 361px;
+        }
+        .style15
+        {
+            width: 128px;
+            height: 66px;
+        }
+        .style16
+        {
+            width: 791px;
+            height: 66px;
+        }
+        .style17
+        {
+            height: 66px;
+        }
+        h1 {width: 100%; font-weight: bold; font-size: x-large; text-transform: capitalize;} 
+    </style>
+
+</head>
+
+<body topmargin="0" cz-shortcut-listen="true"><style type="text/css">
+div.bnu {font-size: 11px; line-height: 22px}
+.bnu a,.bnu a:hover{font:normal 11px Tahoma;text-decoration:none;color:black;padding:0px 5px}
+.bnu a:hover{color: #00F}
+div.ai{width: 240px;font:normal 12px Tahoma;padding:5px 0px 0px 0px;margin:0px;float:left;display: block;text-align:left}
+.ai p {padding:0px;margin:0px;font:normal 12px Tahoma;line-height:normal;text-decoration:none}
+.ai a,.ai a:hover{font:bold 12px Tahoma;text-decoration:underline;color:#00F}
+</style>
+    <table style="width: 100%; height: 480px; color: rgb(102, 153, 255); ">
+        <tbody><tr>
+            <td>
+                </td>
+            <td>
+                <table>
+                    <tbody><tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><h1>Zawgyi1 &lt;=&gt; Unicode 2-Way Converter</h1>
+                        Upgrade your phone and computers to new technologies.<br>Upgrade to Myanmar Unicode. Don't be left behind!
+                        </td>
+                        <td></td>
+                        <td align="right" nowrap="">
+<!--Select Target Font:--><!--  <select id="Select1" name="D1" onchange="Convert()" style="color: rgb(0, 0, 0);">
+                               <option>Select Encoding</option>
+            <option value="zg1">Zawgyi</option>        
+            <option selected="selected" value="m3">Unicode</option>
+            
+                            </select>-->
+				<input type="button" onclick="cvtun()" value="Convert to UNICODE format"><br>
+				or <input type="button" onclick="cvtzg()" value="Convert to Zawgyi format">
+				</td>
+                    </tr>
+                </tbody></table>
+            </td>
+            <td class="style5">
+                </td>
+        </tr>
+        <tr>
+            <td class="style12">
+                </td>
+            <td class="style13">
+                <textarea id="TextArea1" name="S1" style="color: rgb(0, 0, 128); font-family: Myanmar3;"></textarea></td>
+            <td class="style14">
+                </td>
+        </tr>
+        <tr>
+            <td class="style15">
+                </td>
+            <td class="style16">
+                <div name="message">
+                </div>
+            </td>
+            <td class="style17">
+                </td>
+        </tr>
+    </tbody></table>
+<ul>
+<li>CREDITS: This converter is contributed and powered by <a href="https://github.com/ngwestar/parabaik">Parabaik Myanmar Text converter</a>.</li>
+<li>To get help to upgrade to Myanmar Unicode, please see <a target="new" href="http://www.myanmarlanguage.org">http://www.myanmarlanguage.org</a></li>
+</ul>
+
+<script language="JavaScript" src="zg12uni51.js"></script>
+<script language="JavaScript" src="uni512zg1.js"></script>
+<script type="text/javascript">
+
+
+function Convert()
+
+{
+var type=document.getElementById("Select1").value;
+
+var input=document.getElementById("TextArea1").value;
+var result;
+   switch (type)
+   {      
+   case "m3" :
+
+		document.getElementById("TextArea1").style.fontFamily="Myanmar3";
+         result = Z1_Uni(input);
+         break;  
+      case "zg1" :
+
+      document.getElementById("TextArea1").style.fontFamily="Zawgyi-One";
+         result = Uni_Z1(input);
+
+         break;         
+
+      default :
+
+         break;
+
+   }
+
+
+
+document.getElementById("TextArea1").value=result;
+
+}
+function cvtzg()
+{
+	var input=document.getElementById("TextArea1").value;
+	var result;
+	document.getElementById("TextArea1").style.fontFamily="Zawgyi-One";
+         result = Uni_Z1(input);
+	document.getElementById("TextArea1").value=result;
+}
+function cvtun()
+{
+	var input=document.getElementById("TextArea1").value;
+	var result;
+	document.getElementById("TextArea1").style.fontFamily="Myanmar3";
+         result = Z1_Uni(input);
+	document.getElementById("TextArea1").value=result;
+}
+function Select1_onclick() {
+
+}
+
+</script>
+</body>
+</html>
