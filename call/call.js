@@ -8,7 +8,7 @@ endButton.addEventListener('click', function() {
 
 var startButton = document.getElementById('startCall');
 startButton.addEventListener('click', function(){
-	session = userAgent.invite('sip:2023@203.181.36.238', options);
+	session = userAgent.invite('sip:08087385949@203.181.36.238', options);
 	alert('Call started');
 }, false);
 
