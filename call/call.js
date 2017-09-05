@@ -15,7 +15,7 @@ startButton.addEventListener('click', function(){
 var userAgent = new SIP.UA({
 	uri: '2000@203.181.36.238',
 // 	wsServers: ['ws://203.181.36.238:5066'],
- 	wsServers: ['wss://203.181.36.238:7443'],
+ 	wsServers: ['wss://fs1.itj.jp:7443'],
 	password: 'PASS'
 });
 
