@@ -56,29 +56,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<script>
 			
 $('.sampleBtn').on('click', function() {
-	console.log('OK');
 	
-	var script_tag = document.createElement('script');
-	    script_tag.setAttribute("type", "text/javascript");
-	    script_tag.setAttribute("src", "https://www.3s-tools.com/api/conv");
-	    (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
-	    if (script_tag.attachEvent) {
-		//console.log('oh cool, this is IE');
-		script_tag.onreadystatechange = function() { // for IE
-		    if (this.readyState == 'complete' || this.readyState == 'loaded') {
-			this.onreadystatechange = null;
-			scriptLoadHandler();
-		    }
-		};
-	    } else {
-		script_tag.onload = scriptLoadHandler;
-	    }
+	var goLink = $(this).attr("href");
+	console.log('sample button link', goLink);
 	
-	function scriptLoadHandler() {
-		C3stoolsJS.Widget({
-		   k:  "thAe7Lg79Zq6gHY3C"
-		 });
-	}
+	var apiKey = "thAe7Lg79Zq6gHY3C";
+	
+	var convLink = `http://192.168.10.45:3003/api/convcount?k={$apiKey}&ref={$goLink}&r=&c=null&wh=1920_1080__1534_610&ml=&oid=&_=1510103397271`;
+	$.get(convLink, function(data) {
+		console.log('Conversion finished', data);
+	});
+	
 })
 
 	
