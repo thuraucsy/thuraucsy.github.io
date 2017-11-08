@@ -13,6 +13,10 @@
 
 <p class="jp">JapanYen 5,000</p>    
 <p class="eu">Dollar $5</p>
+	
+<h1><a href="https://www.google.co.jp/" target="_blank" class="sampleBtn">Google</a></h1>
+<h1><a href="https://www.yahoo.com/" target="_blank" class="sampleBtn">Yahoo</a></h1>
+<h1><a href="https://www.apple.com/" target="_blank" class="sampleBtn">Apple</a></h1>
 
 
 <a href="http://thuraucsy.github.io/local/pop2.html" target="_blank">
@@ -22,7 +26,7 @@
 
 <a href="http://thuraucsy.github.io/local/nopop.html" target="_blank">No pop</a><br>
 	
-<a href="https://www.google.co.jp/" target="_blank" class="sampleBtn">No pop</a><br>
+
 
 <h2><a target="_blank" href="http://thuraucsy.github.io/local/pop2.html">POP2</a></h2>
 
@@ -58,11 +62,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 $('.sampleBtn').on('click', function() {
 	
 	var goLink = $(this).attr("href");
-	console.log('sample button link', goLink);
+	console.log('sample button link', goLink);	
 	
+	var threeSLink = "http://192.168.10.45:3003/api/convcount";
 	var apiKey = "thAe7Lg79Zq6gHY3C";
 	
-	var convLink = `http://192.168.10.45:3003/api/convcount?k=${apiKey}&ref=${goLink}&r=&c=null&wh=1920_1080__1534_610&ml=&oid=&_=1510103397271`;
+	var convLink = `${threeSLink}?k=${apiKey}&ref=${goLink}&r=&c=null&wh=1920_1080__1534_610&ml=&oid=&_=1510103397271`;
+	
 	$.get(convLink, function(data) {
 		console.log('Conversion finished', data);
 	});
