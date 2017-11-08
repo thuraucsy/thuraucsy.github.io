@@ -62,7 +62,7 @@ $('.sampleBtn').on('click', function() {
 	
 	var apiKey = "thAe7Lg79Zq6gHY3C";
 	
-	var convLink = `http://192.168.10.45:3003/api/convcount?k={$apiKey}&ref={$goLink}&r=&c=null&wh=1920_1080__1534_610&ml=&oid=&_=1510103397271`;
+	var convLink = `http://192.168.10.45:3003/api/convcount?k=${apiKey}&ref=${goLink}&r=&c=null&wh=1920_1080__1534_610&ml=&oid=&_=1510103397271`;
 	$.get(convLink, function(data) {
 		console.log('Conversion finished', data);
 	});
