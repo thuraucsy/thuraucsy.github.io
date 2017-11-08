@@ -21,6 +21,8 @@
 <a href="http://thuraucsy.github.io/local/conv.html">Conversion page</a><br>
 
 <a href="http://thuraucsy.github.io/local/nopop.html" target="_blank">No pop</a><br>
+	
+<a href="https://www.google.co.jp/" target="_blank" class="sampleBtn">No pop</a><br>
 
 <h2><a target="_blank" href="http://thuraucsy.github.io/local/pop2.html">POP2</a></h2>
 
@@ -51,9 +53,35 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 	
+	<script>
+			
+$('.sampleBtn').on('click', function() {
+	console.log('OK');
 	
-
+	var script_tag = document.createElement('script');
+	    script_tag.setAttribute("type", "text/javascript");
+	    script_tag.setAttribute("src", "https://www.3s-tools.com/api/conv");
+	    (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
+	    if (script_tag.attachEvent) {
+		//console.log('oh cool, this is IE');
+		script_tag.onreadystatechange = function() { // for IE
+		    if (this.readyState == 'complete' || this.readyState == 'loaded') {
+			this.onreadystatechange = null;
+			scriptLoadHandler();
+		    }
+		};
+	    } else {
+		script_tag.onload = scriptLoadHandler;
+	    }
+	
+	function scriptLoadHandler() {
+		C3stoolsJS.Widget({
+		   k:  "thAe7Lg79Zq6gHY3C"
+		 });
+	}
+})
 
 	
+	</script>
 </html>
 
